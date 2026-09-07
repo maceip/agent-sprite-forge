@@ -10,7 +10,12 @@ Scene requirement writeups live in `1/bed.md`, `2/smoke.md`, `3/sonic.md`, `4/de
 
 Do not OCR or bake desktop UI from the clips. Prefer mascot/prop/FX separation. Chroma plates use solid `#FF00FF`.
 
-Next: use `$generate2dsprite` (primary) and `$video2dsprite` (Grok Build denser-motion path only) from this repo to produce the sprite lists in each scene file. Expect iterative generate → visual QC against the metrics → redo until the quality bar matches `tests/scene/1/*_bedstyle.png` / `mascot_sleeping.png` richness (isometric volume, anime emotional FX, joking aesthetic).
+**PRIORITY: MASCOT MOTION ONLY.** Do not generate beds, alarms, coffee, drones, megaphones, or other props until the blue-guy body sheets pass.
+
+Active deliverable:
+- `tests/scene/1/gen/v1/mascot_bedtime_body_only/` — 3x3 (9-frame) body-only bedtime: stand → settle → pink mask → snore/Zzz bob. Preview: `animation.gif`
+
+Next: use `$generate2dsprite` (primary) and `$video2dsprite` (Grok Build denser-motion path only) from this repo for more **mascot body action** sheets. Expect iterative generate → visual QC → redo until identity matches turn_front (cloud head, face-screen `> _`, stubby limbs).
 
 ## Scene 1 first-pass status (`tests/scene/1/gen/v1/`)
 Done (v1 generated + processed with `$generate2dsprite`; QC notes in PR):
