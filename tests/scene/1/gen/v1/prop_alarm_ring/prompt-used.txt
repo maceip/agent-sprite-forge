@@ -1,0 +1,21 @@
+Use the image just shown as the visual reference. Preserve this exact faceless purple twin-bell alarm clock: medium-purple rounded twin-bell body, two dome bells on top with small loops, stark white circular face, black tick marks only, simple black hands, flat rectangular purple pedestal. Soft volumetric lighting, clean HD isometric sticker volume.
+
+Create a 2x2 sprite animation sheet. Exactly 4 equal cells in a 2x2 grid. NO borders, NO lines, NO frames between cells. Cells connected only by solid magenta background.
+
+Art style: clean HD / project-native rich isometric soft volume. Do not make pixel art. Do not make flat clipart.
+
+HARD RULES: FACELESS clock — tick marks only. NO Arabic numerals, NO digits, NO smiley face, NO cartoon eyes. Same clock identity, same camera distance, same scale in every cell. 3/4 isometric view matching the reference yaw.
+NO mascot, NO bed, NO coffee, NO UI.
+
+Action: ringing shake loop with yellow vibration tears tightly grouped beside the clock.
+- Top-left: clock tilted slightly left, three small yellow teardrop vibration marks on each side
+- Top-right: clock tilted slightly right, yellow tears a bit stronger
+- Bottom-left: clock compressed downward in a shake, yellow tears radiating
+- Bottom-right: clock rebound tilt toward center-left, yellow tears, ready to loop
+
+Yellow vibration tears / ring-stars must remain tightly attached near the clock body and still fit fully inside each cell. No tear may cross a cell edge.
+
+The entire clock plus tears must fit fully inside each cell. Leave generous solid magenta margin on all four sides. Subject occupies only the central 60% to 70% safe area. Centered in every cell. Same silhouette scale. Never zoom a pose to fill its cell.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor, no drop shadow on the background.
+NO text, NO labels, NO letters, NO words, NO numbers anywhere.

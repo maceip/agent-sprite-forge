@@ -1,0 +1,20 @@
+Use the images just shown as the visual reference. Preserve the cloud-bot mascot identity: large puffy light-blue quilted cumulus cloud head with visible soft seams, dark navy rounded-rectangular face-screen, stubby segmented quilted arms, rounded body, clean HD soft volumetric plush-toy lighting, thick clean outlines. Face-screen shows dizzy expression: two light-blue spiral eyes with a small x above each spiral.
+
+Create a 2x2 sprite animation sheet. Exactly 4 equal cells in a 2x2 grid. NO borders, NO lines, NO frames between cells.
+
+Art style: clean HD / project-native rich isometric soft volume. Do not make pixel art. Do not make flat clipart.
+
+Asset: mascot_dizzy BODY-ONLY wobble loop. 3/4 isometric view matching the reference. Same character identity, same camera distance, same anatomical scale in every cell.
+HARD RULE: BODY ONLY. NO orbit stars, NO dashed orbit ring, NO yellow stars, NO bed, NO alarm, NO coffee, NO sleep mask, NO Zzz, NO UI.
+
+Frame-by-frame in-place wobble (loopable, do not translate the whole body across the cell):
+- Top-left: slight left tilt, spiral eyes
+- Top-right: return toward center, tiny squash
+- Bottom-left: slight right tilt
+- Bottom-right: recover toward center, ready to loop
+Keep torso center fixed. Express dizzy motion through tilt and squash, not walking.
+
+The entire mascot body must fit fully inside each cell. No limb, cloud lobe, or face-screen may cross a cell edge. Leave generous solid magenta margin on all four sides. Subject occupies only the central 60% to 70% safe area. Centered. Same scale. Never zoom a pose to fill its cell.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor, no drop shadow on the background.
+NO text, NO labels, NO letters, NO words, NO numbers anywhere.
