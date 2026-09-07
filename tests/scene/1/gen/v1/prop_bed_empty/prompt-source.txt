@@ -1,0 +1,12 @@
+Use the images just shown as the visual reference for bedstyle only. Draw an EMPTY bed. HARD RULE: NO mascot, NO cloud-bot, NO sleep mask, NO Zzz, NO orbit stars, NO alarm, NO coffee, NO UI, NO characters.
+
+Create a SINGLE centered clean HD 3/4 isometric game sticker prop of an empty white isometric twin bed.
+
+Preserve bedstyle: simple chunky white bed frame, two thick white pillows, puffy white duvet with faint light-blue cloud or camouflage patterning, soft volumetric folds, thick clean outlines, rich isometric soft volume. Do not make pixel art. Do not make flat clipart.
+
+HARD RULE bed orientation: headboard sits toward the UPPER-RIGHT of the frame; foot of the bed points toward the LOWER-LEFT. Same 3/4 isometric yaw language as the references, just mirrored/oriented so the headboard is upper-right.
+NO text on the duvet. Do not write SLEEPING. NO letters, NO words, NO labels, NO numbers.
+
+The entire bed including headboard, pillows, duvet, and footboard/frame must fit fully inside the frame with generous solid magenta margin on all four sides. Full uncropped silhouette. Do not crop the headboard or foot.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor plate, no room, no drop shadow on the background.

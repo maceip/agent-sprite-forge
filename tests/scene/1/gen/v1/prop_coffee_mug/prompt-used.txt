@@ -1,0 +1,19 @@
+Use the image just shown as the visual reference. Preserve this coffee mug identity: chunky white ceramic mug in 3/4 isometric view, slightly tapered cylinder, FULL uncropped rounded handle on the right side, light blue-grey organic camouflage-like splotches on the body, dark brown coffee filled near the brim, creamy white latte-art heart/rosetta on the foam. Soft volumetric lighting, clean HD sticker volume, thick clean outlines.
+
+Create a 2x2 sprite animation sheet. Exactly 4 equal cells in a 2x2 grid. NO borders, NO lines, NO frames between cells.
+
+Art style: clean HD / project-native rich isometric soft volume. Do not make flat clipart. Soft sticker mug is OK even if slightly pixel-adjacent, but keep the volumetric painted look of the reference. Do not make retro chunky 16-bit pixel art.
+
+Asset: prop_coffee_mug steam idle. Same mug identity, same camera, same scale in every cell. HARD RULE: the full handle must be visible and uncropped in every cell. NO mascot, NO bed, NO alarm, NO UI.
+
+Frame-by-frame looping steam:
+- Top-left: two small white steam wisps just rising from the rim
+- Top-right: steam wisps taller and curling
+- Bottom-left: steam peak, still tightly grouped above the rim
+- Bottom-right: steam settling, ready to loop
+Steam must stay tightly grouped above the mug and fully inside each cell.
+
+The entire mug including handle, rim, coffee surface, and steam must fit fully inside each cell. Nothing may cross a cell edge. Leave generous solid magenta margin on all four sides. Subject occupies only the central 60% to 70% safe area. Centered. Same scale. Never zoom a pose to fill its cell.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor, no drop shadow on the background.
+NO text, NO labels, NO letters, NO words, NO numbers anywhere.

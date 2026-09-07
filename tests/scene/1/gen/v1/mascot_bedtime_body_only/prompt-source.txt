@@ -1,0 +1,11 @@
+Use the images just shown as visual reference. Image 1 locks the BLUE/PURPLE cloud-bot mascot identity: puffy periwinkle-to-blue five-lobe cumulus head, dark rounded-rectangular face-screen with mint-green `> _`, stubby nubby limbs (no fingers), cream/white chest `> _` mark, thick navy outline, glossy soft-toy volume. Image 2 is the pink sleep mask (pastel pink, fluffy white trim, small bow, closed-lash stitch). Image 3 is layout-only — use it only for 3x3 slot count, centering, spacing, and safe padding. Do NOT reproduce the guide.
+
+Create ONE 3x3 sprite animation sheet. EXACTLY 9 equal cells. Read left-to-right, then next row. NO lines between cells.
+
+BODY ONLY: mascot + optional pink sleep mask + compact Zzz. NO bed, NO furniture, NO alarm, NO coffee, NO drone, NO UI.
+
+DENSE MOTION: every cell a clearly different pose. Same identity, same camera, same scale. Centered. Nothing crosses cell edges.
+
+Frames: stand >_ → squat bob → settle tuck → curl sleep no mask → mask landing → mask on → snore inhale Zzz → snore mid → snore exhale Zzz.
+
+Background 100% solid flat magenta #FF00FF.

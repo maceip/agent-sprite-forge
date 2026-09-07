@@ -1,0 +1,14 @@
+Use the image just shown as the visual reference. Preserve this exact faceless purple twin-bell alarm clock identity: medium-purple rounded twin-bell body, two dome bells on top each with a small arched loop, stark white circular clock face, black tick marks only for hours and minutes, simple black hour and minute hands from a small center hub, flat rectangular purple pedestal with rounded corners. Soft volumetric lighting from the upper-left, smooth toy-like 3D sticker volume.
+
+Create a SINGLE centered clean HD 3/4 isometric game sticker prop. One object only, not a grid.
+
+Art style: clean HD / project-native rich isometric soft volume. Do not make pixel art. Do not make flat clipart.
+
+HARD RULES: the clock is FACELESS — tick marks only. NO Arabic numerals, NO digits, NO numbers, NO smiley face, NO cartoon eyes, NO mouth on the clock face.
+This is the static idle pose: the clock is still and NOT ringing. NO yellow vibration tears, NO ring-stars, NO motion lines, NO shake.
+NO mascot, NO bed, NO coffee, NO UI.
+
+The entire clock including bells, loops, face, hands, and base must fit fully inside the frame with generous solid magenta margin on all four sides. Full uncropped silhouette. Do not crop the bells or base.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor plate, no drop shadow on the background.
+NO text, NO labels, NO letters, NO words, NO numbers anywhere.

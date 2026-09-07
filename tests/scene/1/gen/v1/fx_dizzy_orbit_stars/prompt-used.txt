@@ -1,0 +1,20 @@
+Use the images just shown as the visual reference for the yellow five-point orbit stars and dashed orbit ring only. Ignore any bed or mascot in the references; do not draw a mascot or a bed.
+
+Create a 2x2 sprite animation sheet of a clean HD FX sticker. Exactly 4 equal cells in a 2x2 grid. NO borders, NO lines, NO frames between cells.
+
+Art style: clean HD / project-native rich isometric soft volume, bright yellow 3D five-point stars with rounded points and a soft glow, plus a thin black dashed elliptical orbit ring. Do not make pixel art. Do not make flat clipart.
+
+Asset: fx_dizzy_orbit_stars looping orbit. FX ONLY. HARD RULE: NO mascot, NO cloud head, NO face-screen, NO body, NO bed, NO alarm, NO coffee, NO UI.
+Leave a large empty magenta hole in the center of each cell so this plate can overlay a mascot head later. Stars ride on the dashed ring around that empty center.
+
+Frame-by-frame rotation (loopable):
+- Top-left: stars at starting positions on the dashed ellipse
+- Top-right: stars rotated about 90 degrees along the same ring
+- Bottom-left: stars rotated about 180 degrees
+- Bottom-right: stars rotated about 270 degrees, ready to loop
+Keep the ring the same size, same center, same camera in every cell. Only star positions change.
+
+The entire ring plus all stars must fit fully inside each cell. No star tip or dash may cross a cell edge. Leave generous solid magenta margin on all four sides. Same scale. Centered.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor.
+NO text, NO labels, NO letters, NO words, NO numbers anywhere.

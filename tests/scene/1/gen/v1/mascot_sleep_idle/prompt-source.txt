@@ -1,0 +1,20 @@
+Use the images just shown as the visual reference. Preserve the cloud-bot mascot identity and bedstyle look exactly: puffy violet-to-blue cumulus cloud head with soft quilted plush volume, dark rounded-rectangular face-screen, stubby segmented blue limbs, thick clean dark-blue outlines, soft volumetric cell-shade. Preserve the girly pink sleep mask with closed-lash embroidery, fluffy white fur trim, and small plump bow, worn over the face-screen. Preserve the white isometric twin bed with two thick white pillows and a puffy white duvet that may have faint light-blue cloud patterning.
+
+Create a 2x2 sprite animation sheet of a clean HD 3/4 isometric game sticker. Exactly 4 equal cells in a 2x2 grid. NO borders, NO lines, NO frames, NO separators between cells. Cells connected only by solid magenta background.
+
+Art style: clean HD / project-native rich isometric soft volume, high-quality digital sticker, anime-cute but not horror. Do not make pixel art. Do not make flat clipart. Do not make retro chunky pixels.
+
+Asset: mascot_sleep_idle breathing loop. Same character identity, same camera distance, same silhouette scale in every cell. 3/4 isometric view from slightly above.
+Bed orientation HARD RULE: headboard sits toward the UPPER-RIGHT of each cell; foot of the bed points toward the LOWER-LEFT. Mascot tucked under the duvet, stubby rounded hands resting on the covers, two small rounded blue feet peeking from the foot of the bed.
+Pink sleep mask on the face-screen. Soft sleeping expression. Optional tiny pink blush. NO Zzz glyphs, NO sparkles, NO alarm clock, NO coffee mug, NO orbit stars, NO desktop, NO UI.
+
+Frame-by-frame soft breathing only (loopable):
+- Top-left: deepest inhale, chest and duvet slightly risen, mask settled
+- Top-right: mid exhale, duvet beginning to settle
+- Bottom-left: deepest exhale, slight squash of cloud head and duvet
+- Bottom-right: mid inhale returning toward the first pose
+
+The entire subject (bed + mascot + mask) must fit fully inside each cell. No body part, bedding, mask, limb, or pillow may cross a cell edge. Leave generous solid magenta margin on all four sides. Subject occupies only the central 60% to 70% safe area. Center the bed-and-mascot group in every cell. Stable feet/bed contact line. Same scale across frames. Never zoom a pose to fill its cell.
+
+Background is 100% solid flat magenta #FF00FF, no gradients, no floor, no drop shadow on the background, no other backdrop.
+NO text, NO labels, NO letters, NO words, NO numbers anywhere (do not write SLEEPING).
