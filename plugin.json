@@ -1,0 +1,21 @@
+{
+  "name": "agent-sprite-forge",
+  "version": "2.0.0",
+  "description": "Image-generation-first 2D sprite sheets, layered maps, and video-to-sprite postprocessing.",
+  "author": {
+    "name": "0x0funky"
+  },
+  "homepage": "https://github.com/maceip/agent-sprite-forge",
+  "repository": "https://github.com/maceip/agent-sprite-forge",
+  "license": "MIT",
+  "keywords": [
+    "sprites",
+    "2d",
+    "game-assets",
+    "pixel-art",
+    "godot",
+    "unity"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json"
+}

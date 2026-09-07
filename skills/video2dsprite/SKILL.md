@@ -1,11 +1,20 @@
 ---
 name: video2dsprite
-description: "Grok Build ONLY. Turn a 2D character still into smooth animation sprites via image_gen/image_edit base → image_to_video (6s/10s run-in-place) → ffmpeg frames → magenta chroma-key → dense sampled sprites (strip/grid/GIF). Use when the user wants video-to-sprite, motion capture from generated video, smoother run/walk cycles from dense frames, or runs /video2dsprite. Do NOT use on Codex/Claude — only Grok Build has image_to_video. Prefer generate2dsprite for crisp pixel sheets without video."
+description: "Grok video tools only. Turn a 2D character still into smooth animation sprites via image_gen/image_edit base → image_to_video (6s/10s run-in-place) → ffmpeg frames → magenta chroma-key → dense sampled sprites (strip/grid/GIF). Use when the user wants video-to-sprite, motion capture from generated video, smoother run/walk cycles from dense frames, or runs /video2dsprite. If image_to_video is missing (Cursor Cloud Agents, Codex, Claude), refuse the video step and offer generate2dsprite instead."
+when-to-use: video to sprite, image_to_video, dense run cycle, video2dsprite
+argument-hint: "[character and action]"
+metadata:
+  author: 0x0funky
+  short-description: Grok-only still → video → dense sprite strips
 ---
 
-# Video2dsprite (Grok Build only)
+# Video2dsprite (Grok video tools only)
 
-Convert a **base 2D character image** into **dense animation sprites** using Grok Build's native video tools.
+Convert a **base 2D character image** into **dense animation sprites** using Grok native video tools.
+
+## Runtime adapter
+
+This skill is **not** Cursor-Cloud or Codex capable unless `image_to_video` is in the tool list. On Cursor / grok-bot without video tools, stop and use `/generate2dsprite`. Process frames with `python scripts/forge.py process-video`. Full mapping: [docs/agent-runtime.md](../../docs/agent-runtime.md).
 
 ```text
 base still → image_to_video (in-place motion) → extract frames → chroma key → sample/normalize → strip / grid / GIF
@@ -15,8 +24,8 @@ base still → image_to_video (in-place motion) → extract frames → chroma ke
 
 | Runtime | Supported? |
 | --- | --- |
-| **Grok Build** (xAI) | **Yes** — requires `image_gen` / `image_edit` + `image_to_video` (or `reference_to_video`) |
-| Codex / Claude / other agents | **No** — they lack Grok video tools. Tell the user this skill is Grok Build only and offer `$generate2dsprite` instead |
+| **Grok CLI / Grok Build** (xAI) with `image_to_video` | **Yes** |
+| **Cursor Cloud Agents / grok-bot / Codex / Claude** | **Only if `image_to_video` is in the tool list.** Otherwise stop and offer `/generate2dsprite` |
 
 If `image_to_video` is missing from the tool list, **stop** and explain. Do not fake motion with code-drawn frames.
 
@@ -47,7 +56,7 @@ Infer from the user request:
 
 ## Agent rules
 
-1. **Grok-only.** Refuse on non-Grok runtimes with a short explanation + `$generate2dsprite` alternative.
+1. **Grok video tools only.** Refuse when `image_to_video` is missing, with a short explanation + `/generate2dsprite` alternative.
 2. **Still → video, never text-to-video alone.** Stage frame 1 as a clean still (`image_gen` or `image_edit` from a reference). Then call `image_to_video`.
 3. **In-place motion.** Prompt for run/walk **in place** facing a fixed direction. No camera pan, no background scroll, no scene change. Subject stays roughly centered.
 4. **Solid magenta background** on the base and preserved in the video prompt (`#FF00FF` / pure magenta). Required for flood-fill chroma.
@@ -125,7 +134,7 @@ If video tools are unavailable, stop (platform gate).
 Run the processor (ffmpeg + Pillow + numpy):
 
 ```bash
-python skills/video2dsprite/scripts/video2dsprite.py process \
+python scripts/forge.py process-video process \
   --video <out_dir>/video/<name>-6s.mp4 \
   --out-dir <out_dir> \
   --name <name> \
@@ -146,7 +155,7 @@ Notes:
 Optional: only re-sample denser sets from existing cleaned frames:
 
 ```bash
-python skills/video2dsprite/scripts/video2dsprite.py sample \
+python scripts/forge.py process-video sample \
   --clean-dir <out_dir>/frames-clean \
   --out-dir <out_dir> \
   --frame-counts 16,24,48 \
@@ -200,6 +209,6 @@ Do **not** modify game code unless requested.
 
 ## Relationship to other skills
 
-- `$generate2dsprite` — primary sheet pipeline (Codex + Grok when image gen exists)
+- `$generate2dsprite` — primary sheet pipeline (Cursor, Grok, Codex when image gen exists)
 - `$generate2dmap` — maps; not used here
-- `$video2dsprite` — **Grok Build exclusive** motion densification path
+- `$video2dsprite` — Grok video-tool exclusive motion densification path

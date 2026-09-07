@@ -1,11 +1,30 @@
 ---
 name: generate2dsprite
-description: "Generate and postprocess general 2D game assets and animation sheets: pixel-art sprites, clean HD map props, creatures, characters, NPCs, spells, projectiles, impacts, props, summons, and transparent GIF exports. Use when Codex should infer the asset plan from a natural-language request, match a reference or map art style, call built-in `image_gen` for solid-magenta raw sheets, and use the local processor only for chroma-key cleanup, frame extraction, alignment, QC, and transparent exports."
+description: "Generate and postprocess 2D game sprites and animation sheets: pixel-art characters, creatures, NPCs, spells, projectiles, impacts, props, summons, and transparent GIF/PNG exports. Use when the user asks for sprites, sprite sheets, 2D characters, FX, prop packs, or runs /generate2dsprite. Infer the asset plan, generate a solid-magenta raw sheet with the host image tool, then chroma-key, slice, align, QC, and export locally."
+when-to-use: sprites, sprite sheet, pixel art, 2D character, animation frames, generate2dsprite, prop pack
+argument-hint: "[asset description]"
+metadata:
+  author: 0x0funky
+  short-description: Image-gen 2D sprite sheets with local chroma/QC export
 ---
 
 # Generate2dsprite
 
 Use this skill for self-contained 2D sprite or animation assets.
+
+## Runtime adapter
+
+Host tool names differ; the pipeline does not. Full table: [docs/agent-runtime.md](../../docs/agent-runtime.md).
+
+| Need | Cursor Cloud / grok-bot | Grok CLI / Build | Codex |
+| --- | --- | --- | --- |
+| Generate raw art | `GenerateImage` | `image_gen` | `image_gen` |
+| Edit from a visible reference | same, reference already in context | `image_edit` / `image_gen` | `image_gen` |
+| Make a local file visible | `Read` the image | `view_image` | `view_image` |
+| Find the generated PNG | path returned by the tool | tool output / cwd | `$CODEX_HOME/generated_images/` then copy into the run folder |
+| Postprocess | `python scripts/forge.py process-sprite -- …` | same | same |
+
+Whenever this file says `image_gen`, call the host equivalent. Whenever it says `view_image`, make the image visible with the host viewer. Never treat a filesystem path string as a visual reference.
 
 When a larger game or playable prototype needs sprites, use this skill for the visible sprite assets and keep runtime/game assembly separate. Do not replace requested sprite assets with code-drawn placeholders.
 
@@ -44,9 +63,9 @@ Read [references/modes.md](references/modes.md) when the request is ambiguous.
 - Only include wide attack FX in the same raw body sheet when the target runtime explicitly supports wider per-action cells plus per-action origin/anchor metadata. Otherwise, a wide FX bbox will force the body to shrink inside the fixed cell.
 - When a grounded hero/player attack must keep an integrated weapon in the body sheet and there is no runtime FX layer, process it with `scale_strategy=preserve` and `align=feet` by default. This preserves raw-cell scale, translates frames to a shared feet line, and avoids bbox-fit shrinking from long swords, spears, weapon trails, capes, or wide melee poses.
 - Write the art prompt yourself. Do not default to the prompt-builder script.
-- Use built-in `image_gen` for every raw image.
-- Do not create raw sprite art with Three.js, Canvas, SVG, HTML/CSS drawing, PIL shape drawing, procedural geometry, placeholder primitives, or code-rendered screenshots. Runtime code may display finished generated assets, and scripts may make layout guides or postprocess generated images, but requested sprite art must originate from built-in `image_gen`.
-- When the user provides or implies a visual reference, use built-in image edit/reference semantics only after the reference image is visible in the conversation context. If the reference is a local file, call `view_image` first; do not rely on a filesystem path in the prompt as the visual reference.
+- Use the host image generator (`image_gen` / `GenerateImage`) for every raw image.
+- Do not create raw sprite art with Three.js, Canvas, SVG, HTML/CSS drawing, PIL shape drawing, procedural geometry, placeholder primitives, or code-rendered screenshots. Runtime code may display finished generated assets, and scripts may make layout guides or postprocess generated images, but requested sprite art must originate from the host image generator.
+- When the user provides or implies a visual reference, use image edit/reference semantics only after the reference image is visible in the conversation context. If the reference is a local file, make it visible first (`view_image` on Grok/Codex, `Read` on Cursor); do not rely on a filesystem path in the prompt as the visual reference.
 - Do not force pixel art when the asset is a map prop for `$generate2dmap` or when the user/project requests a different style. Match the map or reference style first.
 - Use the script only as a deterministic processor: magenta cleanup, frame splitting, component filtering, scaling, alignment, QC metadata, transparent sheet export, and GIF export.
 - Do not use scripts to generate the creative image prompt. If a legacy prompt-builder command exists, treat it as historical compatibility only, not the normal skill workflow.
@@ -61,7 +80,7 @@ Read [references/modes.md](references/modes.md) when the request is ambiguous.
 - For elongated quadrupeds, serpentine creatures, and actors whose tail or attack extension nearly fills a cell, add a shared-silhouette-envelope contract to action prompts: keep the torso center fixed, keep every pose inside the same central 70% to 72% width/height box, tuck tails and long appendages inward, and express pounces or bites through in-place compression/extension instead of translating the whole body across the cell. "Generous margin" alone is not a reliable containment instruction for these silhouettes.
 - For massive grounded bosses, lock the feet and pelvis against lateral translation in idle prompts. Express weight through vertical torso compression, chest/core pulse, shoulder settling, and secondary motion of attached ornaments; do not use whole-body left/right sway as the idle beat.
 - For ground-contact environmental FX such as fire, write one explicit shared ignition/baseline coordinate into the prompt and forbid baked ground plates. Treat tip-height variation as animation, not anchor drift; visually verify the contact line and use an FX-specific anchor threshold instead of applying humanoid feet gates.
-- For high-value grounded player/hero body actions, prefer a character anchor sheet when consistent scale or feet placement matters: repeat one accepted master frame at the intended size and feet line in every cell, then use that sheet as a scale/root template while asking built-in `image_gen` to change only the poses. Do not use a grounded anchor sheet for jumps, knockback, airborne motion, projectiles, or FX.
+- For high-value grounded player/hero body actions, prefer a character anchor sheet when consistent scale or feet placement matters: repeat one accepted master frame at the intended size and feet line in every cell, then use that sheet as a scale/root template while asking the host image generator to change only the poses. Do not use a grounded anchor sheet for jumps, knockback, airborne motion, projectiles, or FX.
 - For a multi-action character bundle, create one scale profile from an accepted idle or run sheet, then process every grounded body action with that profile. The profile locks output cell size, one shared raw-cell scale, anchor, trimming, and component rules across actions. Do not choose a new `fit_scale` per action.
 - For map prop packs, classify props before choosing a grid. Square `2x2`, `3x3`, and `4x4` packs are only for compact props. Do not put platforms, floors, bridges, walls, ladders, gates, doors, long hazards, wide/tall props, collision-bearing objects, or tileset/strip pieces into square prop packs; use one-by-one, `1x3`/`1x4` strips, custom wide cells, or a tileset-like atlas instead.
 - Keep the solid `#FF00FF` background rule unless the user explicitly wants a different processing workflow.
@@ -109,7 +128,7 @@ Choose `art_style` before writing the prompt:
 
 If a reference is involved:
 
-- Make the reference visible first. For local paths, use `view_image`; for freshly generated references, rely on the image already shown in context.
+- Make the reference visible first. For local paths, use `view_image` on Grok/Codex or `Read` on Cursor; for freshly generated references, rely on the image already shown in context.
 - State the reference role explicitly: preserve identity/style, create an animation sheet for the same subject, create an evolution/variant, or derive a matching prop/FX.
 - Preserve the stable identity markers from the reference: silhouette, palette, face/eye features, costume marks, major accessories, and material language.
 - Let only the requested action or evolution change. Do not redesign the subject unless the user asks.
@@ -152,10 +171,10 @@ Map prop pack guardrail:
 - Use custom wide cells for multiple similar wide objects. The grid must state explicit non-square cell dimensions and must not mix compact props with platform/terrain objects.
 - If a square prop pack fails due to edge touch or bad cropping, do not solve it by relaxing QC. Reclassify the object and regenerate with a more suitable sheet shape.
 
-If a layout guide is useful, generate one before calling built-in `image_gen`:
+If a layout guide is useful, generate one before calling the host image generator:
 
 ```bash
-python scripts/make_layout_guide.py \
+python scripts/forge.py layout-guide \
   --rows <rows> \
   --cols <cols> \
   --cell-width 384 \
@@ -174,7 +193,7 @@ Use layout guides deliberately:
 For grounded high-value character actions, an abstract box guide is weaker than a character anchor sheet. After accepting a neutral/idle master frame, create the anchor sheet:
 
 ```bash
-python scripts/make_anchor_layout.py \
+python scripts/forge.py anchor-layout \
   --input <accepted-master-frame.png> \
   --rows 2 \
   --cols 3 \
@@ -185,23 +204,24 @@ python scripts/make_anchor_layout.py \
   --output <run-dir>/references/attack-anchor-2x3.png
 ```
 
-Make both the master frame and anchor sheet visible to built-in `image_gen`. State that the master locks identity/style and the anchor sheet locks slot positions, camera distance, standing-equivalent scale, body root, feet line, and padding. Ask the model to change only the action poses and never reproduce guides, borders, labels, or separators.
+Make both the master frame and anchor sheet visible to the host image generator. State that the master locks identity/style and the anchor sheet locks slot positions, camera distance, standing-equivalent scale, body root, feet line, and padding. Ask the model to change only the action poses and never reproduce guides, borders, labels, or separators.
 
 ### 3. Generate the raw image
 
-Use built-in `image_gen`.
+Use the host image generator (`image_gen` on Grok/Codex, `GenerateImage` on Cursor).
 
 Do not use Three.js, Canvas, SVG, HTML/CSS, PIL drawing, or other code-generated art as the raw sprite source. These are acceptable only for runtime display, debug overlays, deterministic layout guides, or postprocessing already-generated images.
 
 After generation:
 
-- find the raw PNG under `$CODEX_HOME/generated_images/...`
+- use the path returned by the image tool
+- on Codex, also check `$CODEX_HOME/generated_images/` if the tool did not return a workspace path
 - copy or reference it from the working output folder
 - keep the original generated image in place
 
 ### 4. Postprocess locally
 
-Run `scripts/generate2dsprite.py process` on the raw image.
+Run `python scripts/forge.py process-sprite` on the raw image (wraps `skills/generate2dsprite/scripts/generate2dsprite.py process`).
 
 The processor is intentionally low-level. The agent chooses:
 
@@ -223,7 +243,7 @@ Use `--scale-strategy preserve --align feet` for grounded hero/player body sheet
 For a character with multiple actions, write a scale profile only after an accepted reference action passes QC:
 
 ```bash
-python scripts/generate2dsprite.py process \
+python scripts/forge.py process-sprite \
   --input <accepted-run-raw.png> \
   --target player --mode run --rows 2 --cols 3 \
   --output-dir <run-dir> \
@@ -238,7 +258,7 @@ Process later actions with `--scale-profile <bundle>/character-scale-profile.jso
 When integrating a processed grid as a Godot `Sprite3D`, request a world-height contract instead of hand-tuning each action in the game:
 
 ```bash
-python scripts/generate2dsprite.py process \
+python scripts/forge.py process-sprite \
   --input <raw-sheet.png> \
   --target player --mode idle --rows 2 --cols 3 \
   --output-dir <action-dir> \
@@ -253,7 +273,8 @@ This writes `godot-sprite3d.json` beside the frames. The reference action derive
 After all actions pass QC, build one Godot animation bundle:
 
 ```bash
-python scripts/generate2dsprite.py build-godot-bundle \
+```bash
+python scripts/forge.py sprite build-godot-bundle \
   --action idle=<bundle>/idle/godot-sprite3d.json \
   --action move=<bundle>/move/godot-sprite3d.json \
   --action attack=<bundle>/attack/godot-sprite3d.json \
@@ -289,7 +310,7 @@ For elongated creature attacks, any `paste_clamped_frames` or `output_edge_touch
 For grounded high-value humanoid player/hero body actions, run strict QC after generation-first scale control:
 
 ```bash
-python scripts/generate2dsprite.py process \
+python scripts/forge.py process-sprite \
   --input <raw-sheet.png> \
   --target player \
   --mode attack \
@@ -371,6 +392,6 @@ For `hero_action_bundle`, expect:
 
 - `references/modes.md`: asset, action, bundle, and sheet selection
 - `references/prompt-rules.md`: manual prompt patterns and containment rules
-- `scripts/generate2dsprite.py`: postprocess primitive for cleanup, extraction, alignment, QC, and GIF export
-- `scripts/make_anchor_layout.py`: repeat an accepted character frame into a fixed scale/root generation template
-- `scripts/make_layout_guide.py`: create abstract geometry-only guides for prop packs and suitable grids
+- `python scripts/forge.py process-sprite` / `scripts/generate2dsprite.py`: postprocess primitive for cleanup, extraction, alignment, QC, and GIF export
+- `python scripts/forge.py anchor-layout`: repeat an accepted character frame into a fixed scale/root generation template
+- `python scripts/forge.py layout-guide`: create abstract geometry-only guides for prop packs and suitable grids

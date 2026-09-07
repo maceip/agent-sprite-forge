@@ -1,0 +1,15 @@
+---
+description: Route 2D sprite, map, and video-to-sprite requests through Agent Sprite Forge skills and processors.
+alwaysApply: false
+---
+
+# Agent Sprite Forge
+
+When the user asks for 2D sprites, sprite sheets, pixel-art characters, FX, prop packs, layered maps, tilesets, or video-to-sprite motion:
+
+1. Load the matching skill: `generate2dsprite`, `generate2dmap`, or `video2dsprite`.
+2. Use the host image generator for raw art. Never draw requested sprite/map art in code.
+3. Run processors with `python scripts/forge.py`. Run `python scripts/forge.py doctor` if a script fails.
+4. Follow [docs/agent-runtime.md](docs/agent-runtime.md) for Cursor vs Grok vs Codex tool names.
+
+`video2dsprite` requires `image_to_video`. If that tool is missing, use `generate2dsprite` instead.

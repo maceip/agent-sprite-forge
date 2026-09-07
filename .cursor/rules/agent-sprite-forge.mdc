@@ -1,0 +1,14 @@
+---
+description: Route 2D sprite, map, and video-to-sprite work in this repo through Agent Sprite Forge.
+alwaysApply: true
+---
+
+# Agent Sprite Forge (this repository)
+
+This checkout is the Agent Sprite Forge plugin. For 2D sprites, maps, prop packs, or video-to-sprite:
+
+- Read `AGENTS.md` and the matching file under `skills/*/SKILL.md`.
+- Generate raw art with the host image tool. Do not draw requested art in code.
+- Postprocess with `python scripts/forge.py` (see `python scripts/forge.py --help`).
+- Use [docs/agent-runtime.md](docs/agent-runtime.md) for Cursor / Grok / Codex tool names.
+- `video2dsprite` needs `image_to_video`; otherwise use `generate2dsprite`.

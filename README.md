@@ -7,11 +7,11 @@ Languages: [English](./README.md) | [繁體中文](./README.zh-TW.md) | [简体�
 </p>
 
 <p align="center">
-  <strong>Codex skills for game-ready 2D sprites, layered maps, and engine-ready prototypes.</strong>
+  <strong>Cursor, Grok, and Codex skills for game-ready 2D sprites, layered maps, and engine-ready prototypes.</strong>
 </p>
 
 <p align="center">
-  Ask in natural language. Codex plans the asset pipeline, renders with built-in image generation, then local processors clean, split, validate, and export assets for Godot, Unity, or raw 2D game workflows.
+  Ask in natural language. The agent plans the asset pipeline, renders with the host image generator, then local processors clean, split, validate, and export assets for Godot, Unity, or raw 2D game workflows.
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@ Languages: [English](./README.md) | [繁體中文](./README.zh-TW.md) | [简体�
 
 ## What Makes It Different
 
-Agent Sprite Forge is not just a folder of prompts. It is a Codex-first 2D game asset workflow where the agent decides the plan, image generation creates the raw visuals, and deterministic scripts turn those visuals into reusable game assets.
+Agent Sprite Forge is not just a folder of prompts. It is a runtime-agnostic 2D game asset workflow where the agent decides the plan, image generation creates the raw visuals, and deterministic scripts turn those visuals into reusable game assets.
 
 <table>
   <tr>
@@ -384,17 +384,17 @@ Use $generate2dsprite to create a 2D game similar to Pokemon. You only need to b
 
 | Skill | Use it for | Output | Runtime |
 | --- | --- | --- | --- |
-| [`generate2dsprite`](./skills/generate2dsprite) | Sprites, animation sheets, props, spell bundles, FX, reference variants, optional layout guides for fixed-frame sheets | Raw sheet, cleaned transparent sheet, frames, GIFs, metadata | Codex / Grok (image gen) |
-| [`generate2dmap`](./skills/generate2dmap) | Baked maps, layered raster maps, clean HD RPG maps, prop packs, collision/zones, Godot-editable scenes | Base map, dressed reference, prop pack, extracted props, preview, scene metadata | Codex / Grok (image gen) |
-| [`video2dsprite`](./skills/video2dsprite) | **Denser motion sprites from video**: base still → `image_to_video` → frame extract → magenta chroma → multi-density sprite strips/GIFs | Video, raw/clean frames, 8/16/24/48 sprite sets, strips, preview GIFs | **Grok Build only** |
+| [`generate2dsprite`](./skills/generate2dsprite) | Sprites, animation sheets, props, spell bundles, FX, reference variants, optional layout guides for fixed-frame sheets | Raw sheet, cleaned transparent sheet, frames, GIFs, metadata | Cursor Cloud Agents, grok-bot, Grok CLI, Codex |
+| [`generate2dmap`](./skills/generate2dmap) | Baked maps, layered raster maps, clean HD RPG maps, prop packs, collision/zones, Godot-editable scenes | Base map, dressed reference, prop pack, extracted props, preview, scene metadata | Cursor Cloud Agents, grok-bot, Grok CLI, Codex |
+| [`video2dsprite`](./skills/video2dsprite) | **Denser motion sprites from video**: base still → `image_to_video` → frame extract → magenta chroma → multi-density sprite strips/GIFs | Video, raw/clean frames, 8/16/24/48 sprite sets, strips, preview GIFs | **Grok CLI / Grok Build** (`image_to_video`) |
 
-### Grok Build only: `$video2dsprite`
+### Grok video tools: `$video2dsprite`
 
-`$video2dsprite` is a **Grok Build exclusive** skill. It depends on Grok's native **`image_gen` / `image_edit` + `image_to_video`** tools (still → short clip). Codex and other agents do not have `image_to_video`, so they cannot run the generation half of this pipeline.
+`$video2dsprite` needs a native **`image_to_video`** tool (Grok CLI / Grok Build). Cursor Cloud Agents and Codex should refuse the video step and use `$generate2dsprite` instead.
 
 Use it when you want **smoother intermediate poses** (e.g. run/walk cycles) by sampling dense frames from a 6s in-place motion clip. Tradeoffs: softer pixels, possible identity drift, chroma fringe — for crisp production sheets, keep using `$generate2dsprite`.
 
-Install for Grok Build by copying skills into `~/.grok/skills` (see [Install](#install)). On Codex, install is still `~/.codex/skills`; `$video2dsprite` will load but must refuse the video step if tools are missing.
+Install for Grok with `python scripts/install.py --target grok` or copy skills into `~/.grok/skills` (see [Install](#install)). On Cursor, install the plugin; `/video2dsprite` will load but must refuse if video tools are missing.
 
 #### Case study: Ryo run (16 denser frames)
 
@@ -436,13 +436,13 @@ When a visual reference is involved, the image skills follow the same wrapper ru
 
 ## How It Works
 
-1. The user asks Codex for a sprite, prop pack, map, or engine-ready prototype.
+1. The user asks for a sprite, prop pack, map, or engine-ready prototype.
 2. The agent chooses the asset type, action, bundle shape, sheet layout, frame count, style, and alignment strategy.
-3. Built-in image generation creates the raw visual asset.
-4. Local scripts run deterministic post-processing: chroma-key cleanup, despill, frame extraction, alignment, prop-pack slicing, GIF/PNG export, and validation metadata.
-5. For maps and prototypes, Codex can also assemble placement metadata, collision, trigger zones, Godot scenes, or Unity project wiring.
+3. The host image generator (`GenerateImage` on Cursor, `image_gen` on Grok/Codex) creates the raw visual asset.
+4. Local scripts run deterministic post-processing via `python scripts/forge.py`: chroma-key cleanup, despill, frame extraction, alignment, prop-pack slicing, GIF/PNG export, and validation metadata.
+5. For maps and prototypes, the agent can also assemble placement metadata, collision, trigger zones, Godot scenes, or Unity project wiring.
 
-The script is not the creative brain. The agent makes the visual and pipeline decisions; the Python tools only perform repeatable pixel and export operations.
+The script is not the creative brain. The agent makes the visual and pipeline decisions; the Python tools only perform repeatable pixel and export operations. Tool-name mapping across Cursor, Grok, and Codex is in [`docs/agent-runtime.md`](./docs/agent-runtime.md).
 
 ## What It Can Generate
 
@@ -453,49 +453,69 @@ The script is not the creative brain. The agent makes the visual and pipeline de
 - Single baked maps, clean HD layered maps, prop-pack maps, and flattened previews
 - Collision and zone metadata for playable maps
 - Godot-ready editable maps with `TileMapLayer`, separate props, encounter grass, collision, exits, and debug player scenes
-- Prototype-scale Godot and Unity scenes when the user asks Codex to wire assets into an engine project
+- Prototype-scale Godot and Unity scenes when the user asks the agent to wire assets into an engine project
 
 ## Install
 
 Local processors need **Python**, **Pillow**, **numpy**, and (for `$video2dsprite`) **ffmpeg** on `PATH`.
 
-### Option 1: Windows PowerShell
-
-Clone the repo, install dependencies, then copy skills into the agent skills directory you use:
-
-```powershell
-git clone https://github.com/0x0funky/agent-sprite-forge.git
-cd .\agent-sprite-forge
-python -m pip install -r .\requirements.txt
-
-# Codex
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.codex\skills" | Out-Null
-Copy-Item -Recurse -Force ".\skills\*" "$env:USERPROFILE\.codex\skills\"
-
-# Grok Build (required for $video2dsprite video generation)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.grok\skills" | Out-Null
-Copy-Item -Recurse -Force ".\skills\*" "$env:USERPROFILE\.grok\skills\"
-```
-
-### Option 2: macOS / Linux
-
 ```bash
-git clone https://github.com/0x0funky/agent-sprite-forge.git
+git clone https://github.com/maceip/agent-sprite-forge.git
 cd ./agent-sprite-forge
 python3 -m pip install -r ./requirements.txt
-
-# Codex
-mkdir -p ~/.codex/skills
-cp -R ./skills/* ~/.codex/skills/
-
-# Grok Build (required for $video2dsprite video generation)
-mkdir -p ~/.grok/skills
-cp -R ./skills/* ~/.grok/skills/
+python3 scripts/forge.py doctor
 ```
 
-Start a new Codex or Grok Build session after installation so skills reload.
+Then pick the host. One command covers the usual destinations:
 
-**Note:** `$generate2dsprite` and `$generate2dmap` work wherever built-in image generation is available. **`$video2dsprite` full pipeline only works in Grok Build** (`image_to_video`). The Python postprocessor can still re-sample already-exported frames on any machine with ffmpeg + Pillow.
+```bash
+python3 scripts/install.py --dry-run --target all
+python3 scripts/install.py --target cursor   # ~/.cursor/plugins/local/agent-sprite-forge
+python3 scripts/install.py --target grok     # ~/.grok/plugins + ~/.grok/skills
+python3 scripts/install.py --target codex    # ~/.codex/skills
+```
+
+Start a new Cursor, Grok, or Codex session after installation so skills reload.
+
+### Cursor Cloud Agents, grok-bot, and Team / Enterprise marketplace
+
+This repo **is** a Cursor plugin (`/.cursor-plugin/plugin.json`) and a marketplace catalog.
+
+- **Local (no admin):** `python3 scripts/install.py --target cursor`
+- **Team / Enterprise:** Dashboard → Settings → Plugins → Import Marketplace → paste this GitHub URL. Details: [`docs/marketplace.md`](./docs/marketplace.md)
+- **Already in this checkout:** Cloud Agents read `AGENTS.md`, `.cursor/skills/`, and `.cursor/rules/` with no extra copy step
+
+Type `/generate2dsprite`, `/generate2dmap`, or `/video2dsprite`. On grok-bot, enable the plugin under Settings → Plugins → Yours if it does not appear in `/`.
+
+### Grok CLI / Grok Build
+
+Method 1 (recommended, zero servers): this checkout already has `GROK.md` plus `.grok/skills/` links. Grok reads those from the working directory.
+
+```bash
+python3 scripts/install.py --target grok
+# or add the private marketplace:
+grok plugin marketplace add maceip/agent-sprite-forge
+grok plugin install agent-sprite-forge --trust
+```
+
+Run processors with bash:
+
+```bash
+python3 scripts/forge.py process-sprite --input raw.png --target creature --mode idle --output-dir out --rows 2 --cols 2
+```
+
+Optional MCP: `.mcp.json` registers `python3 mcp/server.py`. Prefer the CLI unless the Grok session already uses MCP.
+
+### Codex (copy skills, still supported)
+
+```bash
+python3 scripts/install.py --target codex
+# equivalent: cp -R ./skills/* ~/.codex/skills/
+```
+
+**Note:** `$generate2dsprite` and `$generate2dmap` work wherever the host can generate images. **`$video2dsprite` needs `image_to_video`.** The Python postprocessor can still re-sample already-exported frames on any machine with ffmpeg + Pillow.
+
+Host tool names (`GenerateImage` vs `image_gen`, `Read` vs `view_image`) are documented in [`docs/agent-runtime.md`](./docs/agent-runtime.md).
 
 ## Python Requirements
 
@@ -511,52 +531,20 @@ They are listed in [`requirements.txt`](./requirements.txt) (Python only). Image
 
 ```text
 agent-sprite-forge/
-  README.md
-  README.zh-TW.md
-  README.zh-CN.md
-  README.ja.md
-  README.ko.md
-  requirements.txt
-  src/
+  AGENTS.md / GROK.md / CLAUDE.md
+  plugin.json                      # Agent Plugins + Grok plugin manifest
+  .cursor-plugin/                  # Cursor plugin + Team marketplace
+  .grok-plugin/                    # Grok marketplace
+  .claude-plugin/                  # Claude Code / Grok-compat marketplace
+  .cursor/skills/  .grok/skills/   # discovery links into skills/
+  scripts/forge.py                 # agent CLI
+  scripts/install.py
+  mcp/server.py                    # optional stdio MCP
   skills/
     generate2dmap/
-      SKILL.md
-      agents/
-        openai.yaml
-      references/
-        layered-map-contract.md
-        map-strategies.md
-        prop-pack-contract.md
-      scripts/
-        compose_layered_preview.py
-        extract_prop_pack.py
     generate2dsprite/
-      SKILL.md
-      agents/
-        openai.yaml
-      references/
-        modes.md
-        prompt-rules.md
-      scripts/
-        generate2dsprite.py
-        make_layout_guide.py
-    video2dsprite/                 # Grok Build only (image_to_video)
-      SKILL.md
-      agents/
-        openai.yaml
-      references/
-        pipeline.md
-        prompt-rules.md
-      scripts/
-        video2dsprite.py
+    video2dsprite/                 # needs image_to_video
   src/
-    video2dsprite-ryo/             # README case study (~2–3 MB)
-      base.png
-      run-6s.mp4
-      run-6s-preview.gif           # motion GIF (GitHub-safe)
-      strip-16.png
-      preview-16.gif
-      intro.mp4
 ```
 
 ## Suggested Prompts
@@ -579,7 +567,7 @@ Use $generate2dsprite to create a late-Sengoku player_sheet for a wandering fire
 Use $generate2dsprite to create a wizard spell bundle with cast, projectile, and impact sprites.
 ```
 
-### Video → dense sprites (Grok Build only)
+### Video → dense sprites (Grok `image_to_video` only)
 
 ```text
 Use $video2dsprite with my existing side-view hero PNG as base. Generate a 6s in-place run on #FF00FF, extract frames, chroma key, and export 8/16/24/48 sprite sets + preview GIFs. Do not wire into the game; just report paths.

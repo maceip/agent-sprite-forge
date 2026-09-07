@@ -18,7 +18,7 @@ Always keep these constraints:
 - no borders or frames between cells
 - same asset identity across frames
 - same camera distance and standing-equivalent anatomical scale across body frames; allow natural pose bbox changes without per-pose zoom
-- raw sprite art must come from built-in `image_gen`, not Three.js, Canvas, SVG, HTML/CSS drawing, PIL shape drawing, procedural geometry, placeholder primitives, or code-rendered screenshots
+- raw sprite art must come from the host image generator (`image_gen` / `GenerateImage`), not Three.js, Canvas, SVG, HTML/CSS drawing, PIL shape drawing, procedural geometry, placeholder primitives, or code-rendered screenshots
 
 ## Style Rules
 
@@ -36,7 +36,7 @@ Do not write `16-bit`, `retro JRPG`, or `chunky pixel-art` unless the user asks 
 
 Use these rules when the user attaches a reference, points to a local image, asks for consistency with an earlier generated image, or asks for an evolution/variant of an existing sprite:
 
-- Make the reference image visible to built-in `image_gen` before generation. If the reference is a local file, call `view_image` first; do not assume a path string is a visual input.
+- Make the reference image visible to the host image generator before generation. If the reference is a local file, make it visible first (`view_image` on Grok/Codex, `Read` on Cursor); do not assume a path string is a visual input.
 - In the prompt, say `use the image just shown as the visual reference`.
 - State what must stay fixed: silhouette family, palette, face/eyes, costume or markings, accessories, material language, and art style.
 - State what may change: pose, animation phase, action energy, size progression, evolution traits, or FX intensity.

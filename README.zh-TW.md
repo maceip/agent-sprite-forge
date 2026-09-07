@@ -2,6 +2,8 @@
 
 語言：[English](./README.md) | [繁體中文](./README.zh-TW.md) | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md)
 
+> Cursor / Grok / Codex 安裝方式已改為 `python scripts/install.py` 與 marketplace 目錄。請以 [English README](./README.md) 的 Install 與 [`docs/marketplace.md`](./docs/marketplace.md) 為準。
+
 <p align="center">
   <img src="./src/banner.png" alt="Agent Sprite Forge banner" width="900" />
 </p>

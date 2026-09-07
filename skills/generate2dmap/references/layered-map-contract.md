@@ -43,7 +43,7 @@ Read [prop-pack-contract.md](prop-pack-contract.md) before batching props.
 For generated layered raster maps, use a dressed reference pass before final prop extraction:
 
 1. Generate the base as ground-only terrain.
-2. Make the base visible to built-in `image_gen`. If the base exists as a local file, call `view_image` first; do not expect a filesystem path in the prompt to work as the visual reference.
+2. Make the base visible to the host image generator. If the base exists as a local file, make it visible first; do not expect a filesystem path in the prompt to work as the visual reference.
 3. Ask for a dressed-reference version of the same map by adding props only.
 4. Preserve exact camera, framing, dimensions, terrain, paths, water, anchor pads, collision-relevant boundaries, and map edges.
 5. Use the dressed reference to choose prop identities and placement coordinates, but compose the final runtime preview from the original base plus extracted transparent props.
@@ -182,10 +182,10 @@ Guidelines:
 
 ## Preview Composition
 
-Use `scripts/compose_layered_preview.py` to flatten a base map and placement JSON:
+Use `scripts/compose_layered_preview.py` (or `python scripts/forge.py compose-preview`) to flatten a base map and placement JSON:
 
 ```bash
-python skills/generate2dmap/scripts/compose_layered_preview.py \
+python scripts/forge.py compose-preview \
   --base assets/map/shrine-base.png \
   --placements data/shrine-props.json \
   --output assets/map/shrine-layered-preview.png
