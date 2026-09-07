@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "plugins": {
+    "agent-sprite-forge": {
+      "components": {
+        "skills": [
+          {
+            "name": "generate2dsprite",
+            "description": "Image-gen 2D sprite sheets with local chroma/QC export"
+          },
+          {
+            "name": "generate2dmap",
+            "description": "Image-gen 2D maps, props, collision, and engine metadata"
+          },
+          {
+            "name": "video2dsprite",
+            "description": "Grok-only still → video → dense sprite strips"
+          }
+        ],
+        "commands": [
+          {"name": "generate2dsprite"},
+          {"name": "generate2dmap"},
+          {"name": "video2dsprite"}
+        ],
+        "agents": [
+          {"name": "sprite-forger"}
+        ],
+        "mcpServers": [
+          {"name": "sprite-forge"}
+        ]
+      }
+    }
+  }
+}

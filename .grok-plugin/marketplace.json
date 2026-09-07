@@ -1,0 +1,37 @@
+{
+  "name": "agent-sprite-forge",
+  "description": "Private marketplace for Agent Sprite Forge skills, processors, and optional MCP tools.",
+  "owner": {
+    "name": "0x0funky"
+  },
+  "plugins": [
+    {
+      "name": "agent-sprite-forge",
+      "description": "Image-gen 2D sprite sheets, layered maps, and Grok video-to-sprite postprocessing.",
+      "category": "development",
+      "version": "2.0.0",
+      "homepage": "https://github.com/maceip/agent-sprite-forge",
+      "keywords": [
+        "sprites",
+        "2d",
+        "game-assets",
+        "pixel-art",
+        "image_gen",
+        "godot",
+        "unity",
+        "generate2dsprite",
+        "generate2dmap",
+        "video2dsprite"
+      ],
+      "tags": [
+        "sprites",
+        "maps",
+        "game-dev"
+      ],
+      "source": {
+        "type": "local",
+        "path": "."
+      }
+    }
+  ]
+}

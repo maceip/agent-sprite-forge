@@ -1,0 +1,38 @@
+{
+  "name": "agent-sprite-forge",
+  "owner": {
+    "name": "0x0funky"
+  },
+  "metadata": {
+    "description": "Private/team marketplace for Agent Sprite Forge: 2D sprite sheets, layered maps, and Grok video-to-sprite pipelines.",
+    "version": "2.0.0"
+  },
+  "plugins": [
+    {
+      "name": "agent-sprite-forge",
+      "source": ".",
+      "description": "Generate and postprocess engine-ready 2D sprites, prop packs, and layered maps.",
+      "version": "2.0.0",
+      "author": {
+        "name": "0x0funky"
+      },
+      "homepage": "https://github.com/maceip/agent-sprite-forge",
+      "repository": "https://github.com/maceip/agent-sprite-forge",
+      "license": "MIT",
+      "keywords": [
+        "sprites",
+        "2d",
+        "game-assets",
+        "pixel-art",
+        "godot",
+        "unity"
+      ],
+      "category": "developer-tools",
+      "tags": [
+        "sprites",
+        "maps",
+        "game-dev"
+      ]
+    }
+  ]
+}

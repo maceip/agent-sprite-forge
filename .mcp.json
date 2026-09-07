@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "sprite-forge": {
+      "command": "python3",
+      "args": ["mcp/server.py"]
+    }
+  }
+}

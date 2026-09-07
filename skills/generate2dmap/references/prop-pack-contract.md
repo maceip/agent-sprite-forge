@@ -123,26 +123,11 @@ Use `1x4` only for non-actor platform strips when a slope, corner, broken varian
 
 ## Extraction
 
-Before extraction, run a chroma-key cleanup pass when the sheet has antialiased magenta fringe or when the props will be composited over a dark/detailed base. This is often better than direct hard-key extraction:
+`extract-props` already removes solid magenta. Use it as the default pack slicer. Only run a separate sprite process pass when you need GIF/frame export in addition to individual prop PNGs:
 
 ```bash
-python $CODEX_HOME/skills/.system/imagegen/scripts/remove_chroma_key.py \
+python scripts/forge.py extract-props \
   --input assets/props/raw/forest-props-sheet.png \
-  --out assets/props/raw/forest-props-sheet-alpha.png \
-  --key-color '#ff00ff' \
-  --soft-matte \
-  --transparent-threshold 35 \
-  --opaque-threshold 160 \
-  --despill \
-  --edge-contract 1 \
-  --force
-```
-
-Use `scripts/extract_prop_pack.py`:
-
-```bash
-python skills/generate2dmap/scripts/extract_prop_pack.py \
-  --input assets/props/raw/forest-props-sheet-alpha.png \
   --rows 3 \
   --cols 3 \
   --labels mossy-rock,shrub,fallen-log,small-lantern,wooden-sign,flower-patch,stump,crate,grass-tuft \
