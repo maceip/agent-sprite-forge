@@ -1,0 +1,12 @@
+{
+  "id": "zzz",
+  "kind": "overlay",
+  "frames": ["zzz-1.png", "zzz-2.png", "zzz-3.png", "zzz-4.png", "zzz-5.png", "zzz-6.png"],
+  "fps": 5,
+  "loop": true,
+  "attach": "head",
+  "anchor": "bottom",
+  "offset": [48, -88],
+  "size": [96, 96],
+  "notes": "Snore while sleep phase. Bob +6px with sin(t)."
+}

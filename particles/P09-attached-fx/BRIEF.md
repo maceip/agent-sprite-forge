@@ -1,44 +1,27 @@
 # P09 — Attached FX pack (no body)
 
 - **Status:** done
-- **Notes:** alarm chaos (6), stars (4), zzz (4), joint+O-rings (6) shipped in out/{alarm,stars,zzz,rings}/
+- **Notes:** Regenerated as overlay-only 2×3 loops (6 frames each). No mascot in any cell. New chroma-key.
 - **Claimed by:** grok-build
 - **Kind:** fx
-- **Grid:** 2x2 (4 frames)
-- **Identity refs:** `particles/_identity/` → PROPS-ONLY-sticker-sheet.png (fx language only)
+- **Grid:** 2×3 (6 frames) × 4 systems
+- **Identity refs:** `particles/_identity/PROPS-ONLY-sticker-sheet.png` (clock/star language only)
 - **Write only:** `particles/P09-attached-fx/out/`
 
-## Action
+## Systems
 
-Four compact FX cells on magenta, NOT a character:
-1 Zzz cluster, 2 yellow star orbit, 3 cigarette smoke puff, 4 tiny hearts.
-Each FX is a single connected blob near cell center. These get layered in the player, never baked into a rejected body sheet.
+| Folder | Loop | Attach | Size |
+| --- | --- | --- | --- |
+| `out/alarm/` | ringing clock + notes | on the alarm prop | ~140px |
+| `out/stars/` | 3 yellow stars orbiting empty center | over the head after flip | ~120px |
+| `out/zzz/` | Z's rise and grow | over the head while sleep | ~96px |
+| `out/rings/` | joint ember + expanding O-rings | at the mouth while smoke | ~140px |
 
-## Generate
+Each folder has `apply.json`, `PREFIX-1.png`…`PREFIX-6.png`, `sheet-transparent.png`.
 
-Use `imagine_reference_to_image` (max 3 refs). Magenta `#FF00FF`. No labels. Body in the central 60–70%.
-
-Then:
-
-```bash
-python3 skills/generate2dsprite/scripts/generate2dsprite.py process \
-  --input particles/P09-attached-fx/out/raw-sheet.png \
-  --target player \
-  --mode idle \
-  --rows 2 --cols 2 \
-  --label-prefix fx \
-  --output-dir particles/P09-attached-fx/out \
-  --shared-scale \
-  --align feet \
-  --fit-scale 0.72
-```
-
-## Acceptance (reject and regenerate if any fail)
+## Acceptance
 
 - No mascot body in any cell
-- Each FX is one connected component (use component_mode=all only if pieces are meant to be separate)
-- Tight, usable at ~64–96px
-
-## After accept
-
-Copy frames into `examples/cloud-visor-web/public/sprites/mascot/fx/` in a follow-up commit, or leave them in `out/` for the runtime particle to wire.
+- Magenta keyed (no pink halo)
+- Stars leave an empty center for the head
+- Rings read as toruses, not blobs

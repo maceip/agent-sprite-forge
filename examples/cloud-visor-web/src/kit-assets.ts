@@ -15,8 +15,8 @@ export const SMOKE = n("smoke", "smoke", 4);
 export const DIZZY = n("dizzy", "dizzy", 4);
 
 export const FX_ALARM = fx("alarm", "alarm", 6);
-export const FX_STARS = fx("stars", "star", 4);
-export const FX_ZZZ = fx("zzz", "zzz", 4);
+export const FX_STARS = fx("stars", "star", 6);
+export const FX_ZZZ = fx("zzz", "zzz", 6);
 export const FX_RINGS = fx("rings", "ring", 6);
 export const FX_SPEAKER = fx("speaker", "speaker", 6);
 export const FX_DRONE = fx("drone", "drone", 6);

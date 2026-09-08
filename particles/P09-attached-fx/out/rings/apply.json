@@ -1,0 +1,12 @@
+{
+  "id": "rings",
+  "kind": "overlay",
+  "frames": ["ring-1.png", "ring-2.png", "ring-3.png", "ring-4.png", "ring-5.png", "ring-6.png"],
+  "fps": 6,
+  "loop": true,
+  "attach": "mouth",
+  "anchor": "left",
+  "offset": [58, -72],
+  "size": [140, 140],
+  "notes": "Joint ember is in-frame. Blow left from the mouth during smoke."
+}

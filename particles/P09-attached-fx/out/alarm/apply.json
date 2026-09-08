@@ -1,0 +1,11 @@
+{
+  "id": "alarm",
+  "kind": "overlay",
+  "frames": ["alarm-1.png", "alarm-2.png", "alarm-3.png", "alarm-4.png", "alarm-5.png", "alarm-6.png"],
+  "fps": 10,
+  "loop": true,
+  "attach": "alarm-clock",
+  "anchor": "center",
+  "offset": [0, -36],
+  "size": [140, 140]
+}
