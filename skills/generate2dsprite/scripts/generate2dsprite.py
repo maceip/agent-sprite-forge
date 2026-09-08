@@ -386,52 +386,74 @@ def build_prompt(target: str, mode: str, prompt: str, role: str | None = None, s
     return result, seed
 
 
+def _magenta_candidate_mask(
+    r: np.ndarray, g: np.ndarray, b: np.ndarray, rgb_thresh: int
+) -> np.ndarray:
+    """True where a pixel is magenta / hot-pink / JPEG-fringed key color.
+
+    RGB Euclidean-to-#FF00FF alone misses JPEG pink halos (dist often 100–180).
+    Chroma rule: R and B both high, G clearly lower — does not key red, navy,
+    cream, yellow, or cyan visor marks.
+    """
+    rf = r.astype(np.int16)
+    gf = g.astype(np.int16)
+    bf = b.astype(np.int16)
+    rgb_d = np.sqrt((rf - 255.0) ** 2 + gf.astype(np.float32) ** 2 + (bf - 255.0) ** 2)
+    mag = (rf + bf) / 2 - gf
+    chroma = (rf > 85) & (bf > 85) & ((gf + 28) < np.minimum(rf, bf)) & (mag > 42)
+    pink = (rf > 170) & (bf > 120) & (gf < 120) & ((rf - gf) > 60) & ((bf - gf) > 20)
+    return chroma | pink | (rgb_d < rgb_thresh)
+
+
+def _grow_into(seed: np.ndarray, walkable: np.ndarray, steps: int) -> np.ndarray:
+    fill = seed.copy()
+    for _ in range(steps):
+        pad = np.pad(fill, 1, constant_values=False)
+        neigh = pad[:-2, 1:-1] | pad[2:, 1:-1] | pad[1:-1, :-2] | pad[1:-1, 2:]
+        nxt = fill | (neigh & walkable)
+        if np.array_equal(nxt, fill):
+            break
+        fill = nxt
+    return fill
+
+
+def _despill_magenta(arr: np.ndarray) -> np.ndarray:
+    r = arr[:, :, 0].astype(np.float32)
+    g = arr[:, :, 1].astype(np.float32)
+    b = arr[:, :, 2].astype(np.float32)
+    a = arr[:, :, 3]
+    trans = a == 0
+    pad = np.pad(trans, 1, constant_values=False)
+    near = pad[:-2, 1:-1] | pad[2:, 1:-1] | pad[1:-1, :-2] | pad[1:-1, 2:]
+    spill = np.maximum(0.0, np.minimum(r, b) - g)
+    ds = (a > 0) & near & (spill > 8)
+    r[ds] = np.clip(r[ds] - spill[ds] * 0.92, 0, 255)
+    b[ds] = np.clip(b[ds] - spill[ds] * 0.92, 0, 255)
+    arr[:, :, 0] = r.astype(np.uint8)
+    arr[:, :, 2] = b.astype(np.uint8)
+    return arr
+
+
 def remove_bg_magenta(img: Image.Image, threshold: int = 100, edge_threshold: int = 150) -> Image.Image:
-    pixels = img.load()
-    width, height = img.size
-
-    def dist(r: int, g: int, b: int) -> float:
-        return math.sqrt((r - 255) ** 2 + g**2 + (b - 255) ** 2)
-
-    for x in range(width):
-        for y in range(height):
-            r, g, b, a = pixels[x, y]
-            if a == 0:
-                continue
-            if dist(r, g, b) < threshold:
-                pixels[x, y] = (0, 0, 0, 0)
-
-    visited: set[tuple[int, int]] = set()
-    queue: deque[tuple[int, int]] = deque()
-    for x in range(width):
-        queue.append((x, 0))
-        queue.append((x, height - 1))
-    for y in range(height):
-        queue.append((0, y))
-        queue.append((width - 1, y))
-
-    while queue:
-        x, y = queue.popleft()
-        if (x, y) in visited or x < 0 or x >= width or y < 0 or y >= height:
-            continue
-        visited.add((x, y))
-        r, g, b, a = pixels[x, y]
-        if a == 0:
-            for dx in (-1, 0, 1):
-                for dy in (-1, 0, 1):
-                    if dx == 0 and dy == 0:
-                        continue
-                    if (x + dx, y + dy) not in visited:
-                        queue.append((x + dx, y + dy))
-        elif dist(r, g, b) < edge_threshold:
-            pixels[x, y] = (0, 0, 0, 0)
-            for dx in (-1, 0, 1):
-                for dy in (-1, 0, 1):
-                    if dx == 0 and dy == 0:
-                        continue
-                    if (x + dx, y + dy) not in visited:
-                        queue.append((x + dx, y + dy))
-    return img
+    arr = np.array(img.convert("RGBA"))
+    r, g, b, a = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2], arr[:, :, 3]
+    cand = _magenta_candidate_mask(r, g, b, max(threshold, 110))
+    edge_cand = cand | _magenta_candidate_mask(r, g, b, max(edge_threshold, 170))
+    trans = a == 0
+    h, w = a.shape
+    seed = np.zeros((h, w), dtype=bool)
+    seed[0, :] = True
+    seed[-1, :] = True
+    seed[:, 0] = True
+    seed[:, -1] = True
+    seed &= trans | edge_cand
+    seed |= trans
+    walkable = trans | edge_cand
+    fill = _grow_into(seed, walkable, steps=max(h, w))
+    fill = _grow_into(fill, cand & (a > 0), steps=4)
+    arr[:, :, 3] = np.where(fill, 0, arr[:, :, 3])
+    arr = _despill_magenta(arr)
+    return Image.fromarray(arr)
 
 
 def trim_border(img: Image.Image, px: int = 4) -> Image.Image:
