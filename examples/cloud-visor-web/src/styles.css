@@ -1,0 +1,15 @@
+.player { overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.tab { min-height: 44px; border: 0; background: transparent; color: var(--muted); border-radius: 8px; padding: 0 12px; }
+.tab-active { background: var(--elevated); color: var(--fg); }
+.num { font-family: ui-monospace, monospace; font-size: 11px; color: var(--subtle); margin-right: 4px; }
+.spacer { margin-left: auto; display: flex; gap: 8px; }
+.icon-btn { min-height: 44px; min-width: 44px; border: 1px solid var(--border); background: transparent; color: var(--fg); border-radius: 8px; padding: 0 12px; }
+.stage { position: relative; background: #0e1016; }
+.stage canvas { display: block; width: 100%; height: auto; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+.beat { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin: 0; }
+.beats { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 12px 16px; border-top: 1px solid var(--border); list-style: none; }
+.chip { border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 12px; color: var(--subtle); }
+.chip-on { border-color: var(--accent); color: var(--fg); }
