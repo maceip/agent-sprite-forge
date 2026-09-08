@@ -1,7 +1,7 @@
 # P12 — Drone runtime — turn, dash, hit
 
-- **Status:** open
-- **Claimed by:** —
+- **Status:** done
+- **Claimed by:** grok-build
 - **Kind:** runtime
 - **Write only:** `examples/cloud-visor-web/src/scene-player.tsx` (and `src/kit-assets.ts` if new frame paths are required)
 - **Do not:** regenerate body sheets (those are P01–P09)

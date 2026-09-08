@@ -70,7 +70,7 @@ Ship: `raw-sheet.png`, `sheet-transparent.png`, `PREFIX-1.png` … `PREFIX-N.png
 | P09 | attached-fx (alarm / stars / zzz / o-rings) | fx | mixed | **done** |
 | P10 | scene-bed | runtime | — | open |
 | P11 | scene-window | runtime | — | open |
-| P12 | scene-drone | runtime | — | open |
+| P12 | scene-drone (speaker then drone, shield) | runtime | — | **done** |
 | P13 | scene-phone | runtime | — | open |
 
 Demo player (already on this branch): `examples/cloud-visor-web`. Runtime particles patch that player. Body particles drop frames into `examples/cloud-visor-web/public/sprites/mascot/<action>/` **only after** the particle `out/` is accepted.

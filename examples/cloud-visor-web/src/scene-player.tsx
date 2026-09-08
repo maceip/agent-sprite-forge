@@ -17,6 +17,10 @@ import {
   FX_STARS,
   FX_ZZZ,
   FX_RINGS,
+  FX_SPEAKER,
+  FX_DRONE,
+  FX_SHIELD,
+  FX_SONIC,
   type SceneId,
 } from "./kit-assets";
 
@@ -50,6 +54,11 @@ type Phase =
   | "talk"
   | "idle"
   | "turn"
+  | "blast1"
+  | "flinch"
+  | "droneIn"
+  | "blast2"
+  | "shield"
   | "dash"
   | "hit"
   | "hold"
@@ -68,6 +77,7 @@ type Actor = {
   bed: number;
   alarm: number;
   drone: number;
+  shield: number;
   beat: string;
   airTime: number;
   trauma: number;
@@ -87,6 +97,7 @@ function makeActor(scene: SceneId): Actor {
     bed: 1,
     alarm: 0,
     drone: 1,
+    shield: 0,
     beat: "Idle",
     airTime: FLIP_AIR,
     trauma: 0,
@@ -98,7 +109,7 @@ function makeActor(scene: SceneId): Actor {
     return { ...base, x: -80, phase: "enter", beat: "Walk in", facing: 1 };
   }
   if (scene === "drone") {
-    return { ...base, x: 220, phase: "idle", beat: "Idle", drone: 1 };
+    return { ...base, x: 260, phase: "idle", beat: "Idle", drone: 0, shield: 0 };
   }
   return { ...base, x: 480, phase: "idle", beat: "Idle" };
 }
@@ -206,14 +217,14 @@ function pick(actor: Actor, scene: SceneId): { src: string; flipX: number } {
     if (actor.phase === "idle") return { src: cycle(IDLE, actor.t, 5), flipX };
     if (actor.phase === "turn") {
       const seq = [TURN.front, TURN.left, TURN.back, TURN.right];
-      return { src: seq[clamp(Math.floor(actor.t * 3.2), 0, 3)], flipX };
+      return { src: seq[clamp(Math.floor(actor.t * 3.6), 0, 3)], flipX };
     }
-    if (actor.phase === "dash") {
-      const idx = Math.floor(actor.stride / 16) % DASH.length;
-      return { src: DASH[idx], flipX };
+    if (actor.phase === "blast1" || actor.phase === "flinch") {
+      return { src: DASH[0], flipX };
     }
-    if (actor.phase === "hit") return { src: DASH[DASH.length - 1], flipX };
-    if (actor.phase === "hold") return { src: cycle(IDLE, actor.t, 4), flipX };
+    if (actor.phase === "droneIn") return { src: cycle(IDLE, actor.t, 5), flipX };
+    if (actor.phase === "blast2") return { src: DASH[clamp(Math.floor(actor.t * 8), 0, 2)], flipX };
+    if (actor.phase === "shield" || actor.phase === "hold") return { src: cycle(IDLE, actor.t, 4), flipX };
   }
   if (scene === "phone") {
     if (actor.phase === "idle") return { src: cycle(IDLE, actor.t, 5), flipX };
@@ -353,45 +364,83 @@ function stepWindow(actor: Actor, dt: number) {
 function stepDrone(actor: Actor, dt: number) {
   switch (actor.phase) {
     case "idle":
-      if (actor.t > 1.2) {
+      actor.beat = "Idle";
+      if (actor.t > 0.85) {
         actor.phase = "turn";
         actor.t = 0;
         actor.beat = "Turn";
       }
       break;
     case "turn":
-      if (actor.t > 1.15) {
-        actor.phase = "dash";
+      if (actor.t > 1.05) {
+        actor.phase = "blast1";
         actor.t = 0;
-        actor.beat = "Dash";
+        actor.beat = "Speaker";
         actor.facing = 1;
-        actor.vx = 40;
       }
       break;
-    case "dash": {
-      actor.vx = Math.min(520, actor.vx + 980 * dt);
-      actor.x += actor.vx * dt;
-      actor.stride += Math.abs(actor.vx) * dt;
-      actor.y = FLOOR;
-      if (actor.x > 640) {
-        actor.phase = "hit";
+    case "blast1":
+      actor.trauma = 0.5 + 0.35 * Math.abs(Math.sin(actor.t * 24));
+      actor.squash = 0.8 + 0.08 * Math.sin(actor.t * 28);
+      actor.x = 260 - Math.sin(clamp(actor.t / 1.4, 0, 1) * Math.PI) * 18;
+      if (actor.t > 1.55) {
+        actor.phase = "flinch";
         actor.t = 0;
-        actor.beat = "Hit";
-        actor.vx = 0;
+        actor.beat = "Flinch";
         actor.squash = 0.7;
-        actor.trauma = 0.8;
-        actor.x = 640;
+        actor.trauma = 0.35;
       }
       break;
-    }
-    case "hit":
+    case "flinch":
+      actor.squash = spring(actor.squash, 1, 9, dt);
+      actor.trauma = spring(actor.trauma, 0.08, 5, dt);
+      if (actor.t > 0.65) {
+        actor.phase = "droneIn";
+        actor.t = 0;
+        actor.beat = "Drone";
+        actor.drone = 0;
+      }
+      break;
+    case "droneIn":
+      actor.drone = clamp(actor.t / 0.7, 0, 1);
+      actor.squash = spring(actor.squash, 1, 8, dt);
+      if (actor.t > 1.05) {
+        actor.phase = "blast2";
+        actor.t = 0;
+        actor.beat = "Blast";
+        actor.trauma = 1;
+        actor.squash = 0.68;
+      }
+      break;
+    case "blast2":
+      actor.drone = 1;
+      actor.trauma = 0.95;
+      actor.x = 248 - Math.min(36, actor.t * 70);
+      actor.squash = 0.68 + actor.t * 0.08;
+      actor.shield = clamp((actor.t - 0.35) / 0.25, 0, 1);
       if (actor.t > 0.7) {
+        actor.phase = "shield";
+        actor.t = 0;
+        actor.beat = "Shield";
+        actor.shield = 1;
+        actor.squash = 0.9;
+      }
+      break;
+    case "shield":
+      actor.shield = 1;
+      actor.drone = 1;
+      actor.trauma = spring(actor.trauma, 0.12, 3.5, dt);
+      actor.squash = spring(actor.squash, 1, 7, dt);
+      actor.x = spring(actor.x, 250, 6, dt);
+      if (actor.t > 1.9) {
         actor.phase = "hold";
         actor.t = 0;
+        actor.beat = "Hold";
       }
       break;
     case "hold":
-      if (actor.t > 1.1) Object.assign(actor, makeActor("drone"));
+      actor.shield = 1;
+      if (actor.t > 1.35) Object.assign(actor, makeActor("drone"));
       break;
     default:
       break;
@@ -589,8 +638,35 @@ export function ScenePlayer() {
       };
 
       if (sc === "drone") {
-        const bob = Math.sin(now / 320) * 14;
-        drawSprite(ctx, imgs.get(STICK.drone), 780, 210 + bob, 220, 180, 1);
+        const bob = Math.sin(now / 280) * 10;
+        const speakerOn = actor.phase === "blast1" || actor.phase === "flinch" || actor.phase === "turn";
+        const speakerLinger = actor.phase === "droneIn" || actor.phase === "blast2" || actor.phase === "shield" || actor.phase === "hold";
+        if (speakerOn || speakerLinger) {
+          const spFrame =
+            actor.phase === "blast1"
+              ? FX_SPEAKER[clamp(1 + Math.floor(actor.t * 3.2), 1, 4)]
+              : actor.phase === "flinch"
+                ? FX_SPEAKER[4]
+                : speakerLinger
+                  ? FX_SPEAKER[5]
+                  : FX_SPEAKER[0];
+          const slump = speakerLinger ? 18 : 0;
+          drawSprite(ctx, imgs.get(spFrame), 760, FLOOR + 8 - slump, 168, 168, 1);
+        }
+        if (actor.drone > 0.04 || actor.phase === "droneIn" || actor.phase === "blast2" || actor.phase === "shield" || actor.phase === "hold") {
+          const enter = easeOutBack(clamp(actor.drone, 0, 1));
+          const dx = 1100 - enter * 340 + (actor.phase === "shield" || actor.phase === "hold" ? 40 : 0);
+          const dy = 70 + (1 - enter) * 80 + bob;
+          const dFrame =
+            actor.phase === "blast2"
+              ? FX_DRONE[clamp(2 + Math.floor(actor.t * 4), 2, 4)]
+              : actor.phase === "shield"
+                ? FX_DRONE[4]
+                : actor.phase === "hold"
+                  ? FX_DRONE[5]
+                  : FX_DRONE[clamp(Math.floor(actor.t * 4), 0, 1)];
+          drawSprite(ctx, imgs.get(dFrame), dx, dy + 150, 210, 170, 1);
+        }
       }
 
       const behindBed = sc === "bed" && (actor.phase === "launch" || actor.phase === "flip");
@@ -620,6 +696,26 @@ export function ScenePlayer() {
       }
       if (sc === "window" && actor.phase === "smoke") {
         drawSprite(ctx, imgs.get(cycle(FX_RINGS, actor.t, 6)), actor.x + 62, actor.y - 78, 140, 140, 1);
+      }
+      if (sc === "drone") {
+        if (actor.phase === "blast1") {
+          const i = clamp(Math.floor(actor.t * 4), 0, 3);
+          drawSprite(ctx, imgs.get(FX_SONIC[i]), 560, FLOOR - 10, 260 + actor.t * 40, 150, 1);
+        }
+        if (actor.phase === "blast2") {
+          const i = clamp(2 + Math.floor(actor.t * 5), 2, 4);
+          drawSprite(ctx, imgs.get(FX_SONIC[i]), 540, FLOOR - 20, 320, 180, 1);
+        }
+        if (actor.phase === "shield") {
+          const i = actor.t < 0.45 ? 4 : 5;
+          drawSprite(ctx, imgs.get(FX_SONIC[i]), 430, FLOOR - 8, 200, 150, 1);
+        }
+        if (actor.shield > 0.05) {
+          const pop = 0.35 + 0.65 * easeOutBack(actor.shield);
+          const spark = actor.phase === "shield" && actor.t < 0.7;
+          const src = spark ? FX_SHIELD[2] : actor.phase === "hold" ? FX_SHIELD[3] : FX_SHIELD[clamp(Math.floor(actor.shield * 2), 0, 1)];
+          drawSprite(ctx, imgs.get(src), actor.x + 78, actor.y + 6, 132 * pop, 148 * pop, 1);
+        }
       }
 
       ctx.restore();

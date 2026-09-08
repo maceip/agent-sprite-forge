@@ -1,0 +1,228 @@
+{
+  "target": "asset",
+  "mode": "fx",
+  "prompt": "",
+  "role": "",
+  "input": "/workspace/vendor/agent-sprite-forge/particles/P12-scene-drone/out/drone/raw-sheet.jpg",
+  "threshold": 100,
+  "edge_threshold": 150,
+  "duration": 200,
+  "rows": 2,
+  "cols": 3,
+  "cell_size": 128,
+  "fit_scale": 0.78,
+  "trim_border": 4,
+  "edge_clean_depth": 3,
+  "align": "center",
+  "shared_scale": true,
+  "component_mode": "all",
+  "component_padding": 0,
+  "min_component_area": 1,
+  "edge_touch_margin": 0,
+  "frame_labels": [
+    "drone-1",
+    "drone-2",
+    "drone-3",
+    "drone-4",
+    "drone-5",
+    "drone-6"
+  ],
+  "frames": [
+    {
+      "grid": [
+        0,
+        0
+      ],
+      "source_box": [
+        0,
+        0,
+        469,
+        704
+      ],
+      "component_mode": "all",
+      "component_count": 14,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        57,
+        321,
+        452,
+        578
+      ],
+      "edge_touch": false,
+      "output_size": [
+        92,
+        59
+      ],
+      "paste_position": [
+        18,
+        34
+      ]
+    },
+    {
+      "grid": [
+        0,
+        1
+      ],
+      "source_box": [
+        469,
+        0,
+        938,
+        704
+      ],
+      "component_mode": "all",
+      "component_count": 31,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        44,
+        316,
+        461,
+        577
+      ],
+      "edge_touch": true,
+      "output_size": [
+        97,
+        60
+      ],
+      "paste_position": [
+        15,
+        34
+      ]
+    },
+    {
+      "grid": [
+        0,
+        2
+      ],
+      "source_box": [
+        938,
+        0,
+        1407,
+        704
+      ],
+      "component_mode": "all",
+      "component_count": 26,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        0,
+        308,
+        428,
+        582
+      ],
+      "edge_touch": true,
+      "output_size": [
+        99,
+        63
+      ],
+      "paste_position": [
+        14,
+        32
+      ]
+    },
+    {
+      "grid": [
+        1,
+        0
+      ],
+      "source_box": [
+        0,
+        704,
+        469,
+        1408
+      ],
+      "component_mode": "all",
+      "component_count": 20,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        42,
+        78,
+        446,
+        350
+      ],
+      "edge_touch": false,
+      "output_size": [
+        94,
+        63
+      ],
+      "paste_position": [
+        17,
+        32
+      ]
+    },
+    {
+      "grid": [
+        1,
+        1
+      ],
+      "source_box": [
+        469,
+        704,
+        938,
+        1408
+      ],
+      "component_mode": "all",
+      "component_count": 50,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        73,
+        83,
+        431,
+        352
+      ],
+      "edge_touch": false,
+      "output_size": [
+        83,
+        62
+      ],
+      "paste_position": [
+        22,
+        33
+      ]
+    },
+    {
+      "grid": [
+        1,
+        2
+      ],
+      "source_box": [
+        938,
+        704,
+        1407,
+        1408
+      ],
+      "component_mode": "all",
+      "component_count": 19,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        36,
+        92,
+        424,
+        338
+      ],
+      "edge_touch": false,
+      "output_size": [
+        90,
+        57
+      ],
+      "paste_position": [
+        19,
+        35
+      ]
+    }
+  ],
+  "edge_touch_frames": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ]
+  ]
+}

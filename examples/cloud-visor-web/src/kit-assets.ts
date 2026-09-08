@@ -18,6 +18,10 @@ export const FX_ALARM = fx("alarm", "alarm", 6);
 export const FX_STARS = fx("stars", "star", 4);
 export const FX_ZZZ = fx("zzz", "zzz", 4);
 export const FX_RINGS = fx("rings", "ring", 6);
+export const FX_SPEAKER = fx("speaker", "speaker", 6);
+export const FX_DRONE = fx("drone", "drone", 6);
+export const FX_SHIELD = fx("shield", "shield", 4);
+export const FX_SONIC = fx("sonic", "sonic", 6);
 
 export const TURN = {
   front: "/sprites/mascot/turn/front.png",
@@ -47,6 +51,10 @@ export const ALL_KIT_IMAGES = [
   ...FX_STARS,
   ...FX_ZZZ,
   ...FX_RINGS,
+  ...FX_SPEAKER,
+  ...FX_DRONE,
+  ...FX_SHIELD,
+  ...FX_SONIC,
   ...Object.values(TURN),
   ...Object.values(STICK),
 ];
@@ -70,8 +78,8 @@ export const SCENES_META = [
     id: "drone",
     number: "03",
     title: "Drone",
-    brief: "Turn. Dash. Hit the megaphone drone.",
-    beats: ["Idle", "Turn", "Dash", "Hit"],
+    brief: "First loudspeaker blast. Drone flies in with the speaker. Shield holds.",
+    beats: ["Idle", "Turn", "Speaker", "Drone", "Blast", "Shield"],
   },
   {
     id: "phone",
