@@ -53,7 +53,7 @@ Agent Sprite Forge is not just a folder of prompts. It is a Codex-first 2D game 
 
 These examples were assembled with Codex using `agent-sprite-forge` workflows. They are meant to show the full loop: generated assets, structured scene data, and playable prototype wiring.
 
-A browser canvas player for the glossy cloud-robot mascot (four-view identity lock, chroma-keyed action sheets, bedroom backflip **behind** the bed) lives in [`examples/cloud-visor-web`](./examples/cloud-visor-web). Run `npm install && npm run dev` in that folder.
+Work is split into independent [particles](./particles) (P01–P13) with a locked 4-view identity pack. A browser canvas player for the glossy cloud-robot mascot (four-view identity lock, chroma-keyed action sheets, bedroom backflip **behind** the bed) lives in [`examples/cloud-visor-web`](./examples/cloud-visor-web). Run `npm install && npm run dev` in that folder.
 
 <table>
   <tr>
