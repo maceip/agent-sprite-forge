@@ -629,11 +629,14 @@ export function ScenePlayer() {
         const bw = 268 * pop;
         const bh = 176 * pop;
         drawSprite(ctx, bed, BED_X, FLOOR + 8, bw, bh, 1);
-        if (actor.alarm > 0.05) {
-          const j = Math.sin(actor.t * 52) * 8 * actor.alarm;
-          const hop = Math.abs(Math.sin(actor.t * 28)) * 10 * actor.alarm;
-          const s = 128 * (0.85 + actor.alarm * 0.35);
-          drawSprite(ctx, imgs.get(cycle(FX_ALARM, actor.t, 12)), 148 + j, FLOOR + 4 - hop, s, s, 1);
+        const ringing = actor.alarm > 0.05;
+        const clockSrc = ringing ? STICK.alarmBang : STICK.alarm;
+        const j = ringing ? Math.sin(actor.t * 52) * 8 * actor.alarm : 0;
+        const hop = ringing ? Math.abs(Math.sin(actor.t * 28)) * 10 * actor.alarm : 0;
+        drawSprite(ctx, imgs.get(clockSrc), 168 + j, FLOOR + 6 - hop, 118, 118, 1);
+        if (ringing) {
+          const s = 150 * (0.85 + actor.alarm * 0.25);
+          drawSprite(ctx, imgs.get(cycle(FX_ALARM, actor.t, 12)), 168 + j, FLOOR - 70 - hop, s, s, 1);
         }
       };
 

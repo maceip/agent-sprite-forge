@@ -35,6 +35,8 @@ export const STICK = {
   bedMade: "/sprites/kit/bed-made.png",
   bedMessy: "/sprites/kit/bed-messy.png",
   mug: "/sprites/kit/mug.png",
+  alarm: "/sprites/kit/alarm-ring.png",
+  alarmBang: "/sprites/kit/alarm-bang.png",
 } as const;
 
 export const ALL_KIT_IMAGES = [
