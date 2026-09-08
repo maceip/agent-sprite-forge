@@ -1,12 +1,35 @@
 {
   "id": "zzz",
   "kind": "overlay",
-  "frames": ["zzz-1.png", "zzz-2.png", "zzz-3.png", "zzz-4.png", "zzz-5.png", "zzz-6.png"],
-  "fps": 5,
+  "frames": [
+    "zzz-1.png",
+    "zzz-2.png",
+    "zzz-3.png",
+    "zzz-4.png",
+    "zzz-5.png",
+    "zzz-6.png",
+    "zzz-7.png",
+    "zzz-8.png",
+    "zzz-9.png",
+    "zzz-10.png",
+    "zzz-11.png",
+    "zzz-12.png",
+    "zzz-13.png",
+    "zzz-14.png",
+    "zzz-15.png",
+    "zzz-16.png"
+  ],
+  "fps": 8,
   "loop": true,
   "attach": "head",
-  "anchor": "bottom",
-  "offset": [48, -88],
-  "size": [96, 96],
-  "notes": "Snore while sleep phase. Bob +6px with sin(t)."
+  "anchor": "center",
+  "offset": [
+    48,
+    -88
+  ],
+  "size": [
+    140,
+    140
+  ],
+  "notes": "Rising Z letters only."
 }

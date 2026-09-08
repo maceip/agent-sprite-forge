@@ -1,12 +1,35 @@
 {
   "id": "stars",
   "kind": "overlay",
-  "frames": ["star-1.png", "star-2.png", "star-3.png", "star-4.png", "star-5.png", "star-6.png"],
-  "fps": 8,
+  "frames": [
+    "star-1.png",
+    "star-2.png",
+    "star-3.png",
+    "star-4.png",
+    "star-5.png",
+    "star-6.png",
+    "star-7.png",
+    "star-8.png",
+    "star-9.png",
+    "star-10.png",
+    "star-11.png",
+    "star-12.png",
+    "star-13.png",
+    "star-14.png",
+    "star-15.png",
+    "star-16.png"
+  ],
+  "fps": 12,
   "loop": true,
   "attach": "head",
   "anchor": "center",
-  "offset": [0, -96],
-  "size": [120, 120],
-  "notes": "Empty center. Draw over the mascot after the bed flip / dizzy walk."
+  "offset": [
+    0,
+    -20
+  ],
+  "size": [
+    160,
+    160
+  ],
+  "notes": "Orbiting stars, empty center. No head."
 }

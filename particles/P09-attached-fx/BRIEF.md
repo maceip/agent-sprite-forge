@@ -1,27 +1,18 @@
-# P09 — Attached FX pack (no body)
+# P09 — Overlay particles only (no objects, no body)
 
 - **Status:** done
-- **Notes:** Regenerated as overlay-only 2×3 loops (6 frames each). No mascot in any cell. New chroma-key.
 - **Claimed by:** grok-build
 - **Kind:** fx
-- **Grid:** 2×3 (6 frames) × 4 systems
-- **Identity refs:** `particles/_identity/PROPS-ONLY-sticker-sheet.png` (clock/star language only)
+- **Grid:** 4×4 (16 frames) × 4 systems
 - **Write only:** `particles/P09-attached-fx/out/`
 
-## Systems
+## Systems (FX only)
 
-| Folder | Loop | Attach | Size |
-| --- | --- | --- | --- |
-| `out/alarm/` | ringing clock + notes | on the alarm prop | ~140px |
-| `out/stars/` | 3 yellow stars orbiting empty center | over the head after flip | ~120px |
-| `out/zzz/` | Z's rise and grow | over the head while sleep | ~96px |
-| `out/rings/` | joint ember + expanding O-rings | at the mouth while smoke | ~140px |
+| Folder | What | Not |
+| --- | --- | --- |
+| `out/alarm/` | 16-frame note + ringing-arc burst | no clock |
+| `out/stars/` | 16-frame orbit, empty center | no head |
+| `out/zzz/` | 16-frame rising Z's | no bed |
+| `out/rings/` | 16-frame expanding O-rings | no joint |
 
-Each folder has `apply.json`, `PREFIX-1.png`…`PREFIX-6.png`, `sheet-transparent.png`.
-
-## Acceptance
-
-- No mascot body in any cell
-- Magenta keyed (no pink halo)
-- Stars leave an empty center for the head
-- Rings read as toruses, not blobs
+Each folder: `apply.json`, `PREFIX-1.png` … `PREFIX-16.png`.

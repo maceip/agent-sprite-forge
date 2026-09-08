@@ -1,11 +1,35 @@
 {
   "id": "alarm",
   "kind": "overlay",
-  "frames": ["alarm-1.png", "alarm-2.png", "alarm-3.png", "alarm-4.png", "alarm-5.png", "alarm-6.png"],
-  "fps": 10,
+  "frames": [
+    "alarm-1.png",
+    "alarm-2.png",
+    "alarm-3.png",
+    "alarm-4.png",
+    "alarm-5.png",
+    "alarm-6.png",
+    "alarm-7.png",
+    "alarm-8.png",
+    "alarm-9.png",
+    "alarm-10.png",
+    "alarm-11.png",
+    "alarm-12.png",
+    "alarm-13.png",
+    "alarm-14.png",
+    "alarm-15.png",
+    "alarm-16.png"
+  ],
+  "fps": 12,
   "loop": true,
-  "attach": "alarm-clock",
+  "attach": "sleep-head-area",
   "anchor": "center",
-  "offset": [0, -36],
-  "size": [140, 140]
+  "offset": [
+    40,
+    -70
+  ],
+  "size": [
+    160,
+    160
+  ],
+  "notes": "Notes + ringing arcs only. No clock."
 }

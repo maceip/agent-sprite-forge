@@ -1,12 +1,35 @@
 {
   "id": "rings",
   "kind": "overlay",
-  "frames": ["ring-1.png", "ring-2.png", "ring-3.png", "ring-4.png", "ring-5.png", "ring-6.png"],
-  "fps": 6,
+  "frames": [
+    "ring-1.png",
+    "ring-2.png",
+    "ring-3.png",
+    "ring-4.png",
+    "ring-5.png",
+    "ring-6.png",
+    "ring-7.png",
+    "ring-8.png",
+    "ring-9.png",
+    "ring-10.png",
+    "ring-11.png",
+    "ring-12.png",
+    "ring-13.png",
+    "ring-14.png",
+    "ring-15.png",
+    "ring-16.png"
+  ],
+  "fps": 12,
   "loop": true,
   "attach": "mouth",
-  "anchor": "left",
-  "offset": [58, -72],
-  "size": [140, 140],
-  "notes": "Joint ember is in-frame. Blow left from the mouth during smoke."
+  "anchor": "center",
+  "offset": [
+    70,
+    -40
+  ],
+  "size": [
+    180,
+    160
+  ],
+  "notes": "O-rings only. No joint."
 }
