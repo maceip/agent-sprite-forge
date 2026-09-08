@@ -67,7 +67,7 @@ Ship: `raw-sheet.png`, `sheet-transparent.png`, `PREFIX-1.png` … `PREFIX-N.png
 | P06 | smoke | body | 2×2 | open |
 | P07 | phone-headphones | body | 2×2 | open |
 | P08 | dizzy-coffee | body | 2×2 | open |
-| P09 | attached-fx | fx | 2×2 | open |
+| P09 | attached-fx (alarm / stars / zzz / o-rings) | fx | mixed | **done** |
 | P10 | scene-bed | runtime | — | open |
 | P11 | scene-window | runtime | — | open |
 | P12 | scene-drone | runtime | — | open |

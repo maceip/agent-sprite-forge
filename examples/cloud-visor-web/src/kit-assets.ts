@@ -1,6 +1,9 @@
 const n = (dir: string, prefix: string, count: number) =>
   Array.from({ length: count }, (_, i) => `/sprites/mascot/${dir}/${prefix}-${i + 1}.png`);
 
+const fx = (dir: string, prefix: string, count: number) =>
+  Array.from({ length: count }, (_, i) => `/sprites/fx/${dir}/${prefix}-${i + 1}.png`);
+
 export const IDLE = n("idle-front", "idle", 4);
 export const WALK = n("walk-right", "walk", 4);
 export const WALK_LEFT = n("walk-left", "walk", 4);
@@ -10,6 +13,11 @@ export const PHONE = n("phone", "phone", 4);
 export const DASH = n("dash", "dash", 6);
 export const SMOKE = n("smoke", "smoke", 4);
 export const DIZZY = n("dizzy", "dizzy", 4);
+
+export const FX_ALARM = fx("alarm", "alarm", 6);
+export const FX_STARS = fx("stars", "star", 4);
+export const FX_ZZZ = fx("zzz", "zzz", 4);
+export const FX_RINGS = fx("rings", "ring", 6);
 
 export const TURN = {
   front: "/sprites/mascot/turn/front.png",
@@ -22,8 +30,6 @@ export const STICK = {
   drone: "/sprites/kit/drone-meg.png",
   bedMade: "/sprites/kit/bed-made.png",
   bedMessy: "/sprites/kit/bed-messy.png",
-  alarmRing: "/sprites/kit/alarm-ring.png",
-  alarmBang: "/sprites/kit/alarm-bang.png",
   mug: "/sprites/kit/mug.png",
 } as const;
 
@@ -37,6 +43,10 @@ export const ALL_KIT_IMAGES = [
   ...DASH,
   ...SMOKE,
   ...DIZZY,
+  ...FX_ALARM,
+  ...FX_STARS,
+  ...FX_ZZZ,
+  ...FX_RINGS,
   ...Object.values(TURN),
   ...Object.values(STICK),
 ];
@@ -46,14 +56,14 @@ export const SCENES_META = [
     id: "bed",
     number: "01",
     title: "Bedroom",
-    brief: "Asleep. Alarm. Backflip behind the bed. Land. Dizzy coffee walk.",
+    brief: "Snore Zzz. Alarm chaos. Backflip behind the bed with dizzy stars. Coffee walk.",
     beats: ["Sleep", "Alarm", "Flip out", "Land", "Coffee walk"],
   },
   {
     id: "window",
     number: "02",
     title: "Window",
-    brief: "Walk in. Smoke. Phone out. Hold.",
+    brief: "Walk in. Joint. Blow O-rings. Phone out. Hold.",
     beats: ["Walk in", "Smoke", "Phone", "Hold"],
   },
   {

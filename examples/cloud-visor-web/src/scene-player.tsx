@@ -13,6 +13,10 @@ import {
   TURN,
   WALK,
   WALK_LEFT,
+  FX_ALARM,
+  FX_STARS,
+  FX_ZZZ,
+  FX_RINGS,
   type SceneId,
 } from "./kit-assets";
 
@@ -236,6 +240,7 @@ function stepBed(actor: Actor, dt: number) {
       actor.alarm = Math.min(1, actor.alarm + dt * 1.6);
       actor.x = BED_X;
       actor.y = FLOOR - 52;
+      actor.trauma = 0.35 + 0.45 * Math.abs(Math.sin(actor.t * 18));
       if (actor.t > 1.35) {
         actor.phase = "launch";
         actor.t = 0;
@@ -576,10 +581,10 @@ export function ScenePlayer() {
         const bh = 176 * pop;
         drawSprite(ctx, bed, BED_X, FLOOR + 8, bw, bh, 1);
         if (actor.alarm > 0.05) {
-          const ring = actor.t > 0.9 ? STICK.alarmBang : STICK.alarmRing;
-          const j = Math.sin(actor.t * 48) * 5 * actor.alarm;
-          const s = 96 * (0.75 + actor.alarm * 0.45);
-          drawSprite(ctx, imgs.get(ring), 140 + j, FLOOR + 4, s, s, 1);
+          const j = Math.sin(actor.t * 52) * 8 * actor.alarm;
+          const hop = Math.abs(Math.sin(actor.t * 28)) * 10 * actor.alarm;
+          const s = 128 * (0.85 + actor.alarm * 0.35);
+          drawSprite(ctx, imgs.get(cycle(FX_ALARM, actor.t, 12)), 148 + j, FLOOR + 4 - hop, s, s, 1);
         }
       };
 
@@ -595,6 +600,26 @@ export function ScenePlayer() {
       } else {
         drawBedLayer();
         drawActor();
+      }
+
+      if (sc === "bed" && actor.phase === "sleep") {
+        const bob = Math.sin(actor.t * 2.8) * 10;
+        drawSprite(ctx, imgs.get(cycle(FX_ZZZ, actor.t, 5)), actor.x + 58, actor.y - 96 + bob, 92, 92, 1);
+      }
+      if (sc === "bed" && (actor.phase === "launch" || actor.phase === "flip" || actor.phase === "land" || actor.phase === "coffee")) {
+        const ang = actor.t * 5.5;
+        drawSprite(
+          ctx,
+          imgs.get(cycle(FX_STARS, actor.t, 8)),
+          actor.x + Math.cos(ang) * 10,
+          actor.y - 108 + Math.sin(ang * 1.4) * 6,
+          118,
+          118,
+          1,
+        );
+      }
+      if (sc === "window" && actor.phase === "smoke") {
+        drawSprite(ctx, imgs.get(cycle(FX_RINGS, actor.t, 6)), actor.x + 62, actor.y - 78, 140, 140, 1);
       }
 
       ctx.restore();

@@ -1,7 +1,8 @@
 # P09 — Attached FX pack (no body)
 
-- **Status:** open
-- **Claimed by:** —
+- **Status:** done
+- **Notes:** alarm chaos (6), stars (4), zzz (4), joint+O-rings (6) shipped in out/{alarm,stars,zzz,rings}/
+- **Claimed by:** grok-build
 - **Kind:** fx
 - **Grid:** 2x2 (4 frames)
 - **Identity refs:** `particles/_identity/` → PROPS-ONLY-sticker-sheet.png (fx language only)
