@@ -1,0 +1,31 @@
+{
+  "id": "wave",
+  "kind": "overlay",
+  "frames": [
+    "wave-1.png",
+    "wave-2.png",
+    "wave-3.png",
+    "wave-4.png",
+    "wave-5.png",
+    "wave-6.png",
+    "wave-7.png",
+    "wave-8.png",
+    "wave-9.png",
+    "wave-10.png",
+    "wave-11.png",
+    "wave-12.png",
+    "wave-13.png",
+    "wave-14.png",
+    "wave-15.png",
+    "wave-16.png"
+  ],
+  "fps": 12,
+  "loop": true,
+  "attach": "from-right",
+  "anchor": "center",
+  "size": [
+    180,
+    180
+  ],
+  "notes": "Cyan sonic waveform + shards. No drone, no horn."
+}

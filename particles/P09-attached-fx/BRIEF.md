@@ -1,18 +1,21 @@
-# P09 — Overlay particles only (no objects, no body)
+# P09 — Overlay energy particles (no objects, no body)
 
-- **Status:** done
+- **Status:** done (expanding)
 - **Claimed by:** grok-build
 - **Kind:** fx
-- **Grid:** 4×4 (16 frames) × 4 systems
+- **Grid:** 4×4 (16 frames) per system
 - **Write only:** `particles/P09-attached-fx/out/`
 
-## Systems (FX only)
+## Board
 
-| Folder | What | Not |
-| --- | --- | --- |
-| `out/alarm/` | 16-frame note + ringing-arc burst | no clock |
-| `out/stars/` | 16-frame orbit, empty center | no head |
-| `out/zzz/` | 16-frame rising Z's | no bed |
-| `out/rings/` | 16-frame expanding O-rings | no joint |
+| Folder | Frames | What | Not |
+| --- | --- | --- | --- |
+| `alarm/` | 16 | notes + ringing arcs | no clock |
+| `stars/` | 16 | orbit, empty center | no head |
+| `zzz/` | 16 | rising Z's | no bed |
+| `rings/` | 16 | O-rings | no joint |
+| `puffs/` | 16 | sticker smoke clouds | no joint |
+| `hex/` | 16 | hex energy sphere, pulse→crack | no mascot |
+| `wave/` | 16 | cyan sonic waveform + shards | no drone |
 
-Each folder: `apply.json`, `PREFIX-1.png` … `PREFIX-16.png`.
+Objects stay on the sticker sheets (49801/49802). These folders are overlays only.

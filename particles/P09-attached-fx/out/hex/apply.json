@@ -1,0 +1,31 @@
+{
+  "id": "hex",
+  "kind": "overlay",
+  "frames": [
+    "hex-1.png",
+    "hex-2.png",
+    "hex-3.png",
+    "hex-4.png",
+    "hex-5.png",
+    "hex-6.png",
+    "hex-7.png",
+    "hex-8.png",
+    "hex-9.png",
+    "hex-10.png",
+    "hex-11.png",
+    "hex-12.png",
+    "hex-13.png",
+    "hex-14.png",
+    "hex-15.png",
+    "hex-16.png"
+  ],
+  "fps": 12,
+  "loop": true,
+  "attach": "body",
+  "anchor": "center",
+  "size": [
+    180,
+    180
+  ],
+  "notes": "Hex energy sphere. Empty inside. Pulse then crack on impact. No mascot."
+}

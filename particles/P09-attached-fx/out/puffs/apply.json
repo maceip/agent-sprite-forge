@@ -1,0 +1,31 @@
+{
+  "id": "puffs",
+  "kind": "overlay",
+  "frames": [
+    "puff-1.png",
+    "puff-2.png",
+    "puff-3.png",
+    "puff-4.png",
+    "puff-5.png",
+    "puff-6.png",
+    "puff-7.png",
+    "puff-8.png",
+    "puff-9.png",
+    "puff-10.png",
+    "puff-11.png",
+    "puff-12.png",
+    "puff-13.png",
+    "puff-14.png",
+    "puff-15.png",
+    "puff-16.png"
+  ],
+  "fps": 8,
+  "loop": true,
+  "attach": "mouth",
+  "anchor": "center",
+  "size": [
+    180,
+    180
+  ],
+  "notes": "Sticker-style smoke clouds. No joint."
+}
